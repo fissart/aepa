@@ -4,6 +4,7 @@
   import { environment } from '../../../environments/environment';
   import { ActivatedRoute } from '@angular/router';
   import { Router } from '@angular/router';
+  import {Title} from '@angular/platform-browser'
 
   @Component({
     selector: 'app-cmpt19-educacion',
@@ -31,6 +32,8 @@
   private routerr: Router,
   private Service: Svc14MVService,
   private modal: NgbModal,
+  private Tw: Title,
+
   ) { }
   capturandoFile(event: any) {
   const ww = event.target.files[0];
@@ -55,7 +58,7 @@
   }
 
   onImgError(event: any) {
-  event.target.src = './assets/negz.png'
+  event.target.src = '../../../assets/img5.jpg'
   }
 
   options = {
@@ -80,6 +83,7 @@
   }
 
   ngOnInit(): void {
+    this.Tw.setTitle('Proyectos AEPA');
   this.router.params.subscribe(params => {
   console.log(localStorage.getItem('idcurso') || "" )
   this.gets()

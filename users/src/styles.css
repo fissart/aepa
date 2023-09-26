@@ -4,11 +4,17 @@
 @import '~swiper/modules/pagination/pagination.min.css';
 @import '~quill/dist/quill.snow.css';
 
-body{
+html *
+{
+   font-size: 1em !important;
+   color: #000 !important;
+   font-family: Arial !important;
+}
 
+body{
+  font-size: .95em !important;
+  background: linear-gradient(to bottom, rgb(232,232,232), rgb(232,232,232));
 /*
-background: linear-gradient(to bottom, rgb(0,0,0), rgb(50,0,200));
-background: linear-gradient(to bottom, rgb(0,0,0), rgb(150,0,70));
 background: url("/assets/negz.jpg");
 */
 background-size: 100%;
@@ -16,8 +22,23 @@ min-height: 10vh;
 background-attachment: fixed;
 }
 
+
+.jumbo{
+  background: url("/assets/ww_w.jpg");
+  background-size: cover;
+  color:white
+}
+
+.transparentjumbo {
+    background: rgba(250,250,200,0.3);
+}
+
+
+iframe {width:100%
+}
+
 .nav {
-  background: white;
+  background: linear-gradient(to bottom, rgb(232,232,232), rgb(232,232,232));
 
   /*
   background: linear-gradient(to bottom, rgb(50,0,200), rgb(0,0,0));
@@ -77,7 +98,7 @@ color: black  !important;
 
 .mytest {
     position: absolute;
-    top: 50%;
+    top: 80%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 0;
@@ -200,7 +221,9 @@ th {
     color: inherit;
 }
 
-
+/*
+h5 { font-family: "Brush Script MT", cursive; font-size: 24px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 26.4px; } h3 { font-family: "Brush Script MT", cursive; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 15.4px; } p { font-family: "Brush Script MT", cursive; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 20px; } blockquote { font-family: "Brush Script MT", cursive; font-size: 21px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 30px; } pre { font-family: "Brush Script MT", cursive; font-size: 13px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 18.5714px; }
+*/
 .vertical {
   -webkit-writing-mode: vertical-rl;
   -ms-writing-mode: tb-rl;
@@ -238,12 +261,34 @@ blockquote {
 
 .card-photo:hover {
     /*border: 2px solid rgb(255, 94, 0);*/
-    animation: jello;
-    /*wobble flip bounce pulse referring directly to the animation's @keyframe declaration */
+    animation: bounce;
+    /*wobble flip bounce jello pulse referring directly to the animation's @keyframe declaration */
     animation-duration: 0.5s;
-    /* don't forget to set a duration! */
+    /* don't forget to set a duration!
+    background-color: rgb(21, 160, 148);
+    */
+}
+
+.jello {
+    cursor: pointer;
+}
+
+.jello:hover {
+    animation: jello;
+    animation-duration: 0.5s;
     background-color: rgb(21, 160, 148);
 }
+
+.bounce {
+    cursor: pointer;
+}
+
+.bounce:hover {
+    animation: bounce;
+    animation-duration: 0.2s;
+    background-color: rgb(21, 160, 148);
+}
+
 
 .wrapperest100 {
     width: 0%;
@@ -273,11 +318,14 @@ blockquote {
     left: 3em;
     */
     position: relative;
-    width: 45px;
+    width: 75px;
     height: 69px;
 }
 
 .wrapperest5 {
+    position: absolute;
+    bottom: 0.2em;
+    right: 0.2em;
     width: 80px;
     height: 80px;
     overflow: hidden;
@@ -365,7 +413,7 @@ blockquote {
     /*wobble flip bounce pulse referring directly to the animation's @keyframe declaration */
     animation-duration: .1s;
       box-shadow: 0 3px 5px rgba(0,0,0,0.5);
-    background-color:rgb(250,250,250);
+    background-color:rgb(153,52,53);
 }
 
 .cardnew_ {
@@ -435,7 +483,7 @@ background: url(https://cdn.elnacional.com/wp-content/uploads/2021/12/Poesia-fra
 
 .imgcurse {
     width: 100%;
-    height: 250px;
+   
     margin: auto;
     overflow: hidden;
     border-radius: .2em;
@@ -448,7 +496,7 @@ background: url(https://cdn.elnacional.com/wp-content/uploads/2021/12/Poesia-fra
 
 .floatop {
     position: absolute;
-    top: 33%;
+    top: 30%;
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: .5em;

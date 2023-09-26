@@ -16,7 +16,7 @@ router.route('/Controller')
 
 router.route('/ControllerThemeUser/:id/:curssse')
     .get(getupdateController)
- 
+
 router.route('/Controller/:id')
     .delete(deleteController)
     .put(upload.single('image'), updateController);

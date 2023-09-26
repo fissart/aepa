@@ -15,51 +15,41 @@ export async function getSController(req: Request, res: Response): Promise<Respo
     //const Curse = await User.find({rol:'3'}).sort({name:1});
     const { ObjectId } = require("mongodb");
     const id = ObjectId(req.params.id);
-    const mencion = req.params.www;
-    const ciclo = req.params.ciclo;
-    const codigo = req.params.codigo;
+    const mension = req.params.www;
+    console.log(mension);
+
     const curse = ObjectId(id);
     const usersww = await User.aggregate([
-        {
-            $match: {
-                'rol': '3',
-                'mencion': mencion,
-                'ciclo': ciclo,
-            },
+    {
+        $match: {
+            'rol': '3',
+            'mension': mension,
         },
-        /*
-        {
-          $lookup: {
-            from: 'integers',
-            let: { userId: '$_id' },
-            pipeline: [
-                {$match: { $expr: { $and: [{ $eq: ["$user", "$$userId"] }, { $eq: ["$curse",  curse] },] } }},
-            ],
-            as: 'www'
-          }
-        },
-        */
-        {
-            $lookup: {
-                from: "averages",
-                let: { wwwww: "$_id" },
-                pipeline: [
-                    { $match: { $expr: { $and: [{ $eq: ["$user", "$$wwwww"] }, { $eq: ["$codigo", codigo] }, { $eq: ["$mencion", mencion] }, { $eq: ["$ciclo", ciclo] }] } } },
-                    {
-                        $lookup: {
-                            from: "users",
-                            let: { wwwww: "$teacher" },
-                            pipeline: [
-                                { $match: { $expr: { $eq: ["$_id", "$$wwwww"] } } },
-                            ],
-                            as: "teach",
-                        },
-                    },
-                ],
-                as: "averagge",
-            },
-        },
-    ]).collation( { locale: 'es'} ).sort( {"name": 1 } )
+    },
+    {
+      $lookup: {
+        from: 'integers',
+        let: { userId: '$_id' },
+        pipeline: [
+            {$match: { $expr: { $and: [{ $eq: ["$user", "$$userId"] }, { $eq: ["$curse",  curse] },] } }},
+        ],
+        as: 'www'
+      }
+    },
+    {$sort: {  'www.name': 1 }},
+    /*
+    {
+      $lookup: {
+        from: "averages",
+        let: { userw: "$_id" },
+        pipeline: [
+            { $match: { $expr: { $eq: ["$user", "$$userw"] } } },
+        ],
+        as: "averagge",
+      },
+    },
+    */
+  ])
     return res.json(usersww);
 }
 
@@ -78,72 +68,35 @@ export async function getController(req: Request, res: Response): Promise<Respon
                 let: { ww: "$_id" },
                 pipeline: [
 
-                    { $match: { $expr: { $and: [{ $eq: ["$user", "$$ww"] }, { $eq: ["$show", "true"] },] } } },
+                    {$match: { $expr: { $and: [{ $eq: ["$user", "$$ww"] }, { $eq: ["$show",  "true"] },] } }},
                 ],
                 as: "cursse",
             },
         },
         {
-            $lookup: {
+              $lookup: {
                 from: "integers",
                 let: { www: "$_id" },
                 pipeline: [
 
-                    { $match: { $expr: { $and: [{ $eq: ["$user", "$$www"] }, { $eq: ["$show", "true"] },] } } },
-                    {
+                  {$match: { $expr: { $and: [{ $eq: ["$user", "$$www"] }, { $eq: ["$show",  "true"] },] } }},
+                  {
                         $lookup: {
-                            from: "curses",
-                            let: { wwwww: "$curse" },
-                            pipeline: [
-                                { $match: { $expr: { $eq: ["$_id", "$$wwwww"] } } },
-                            ],
-                            as: "cursew",
+                          from: "curses",
+                          let: { wwwww: "$curse" },
+                          pipeline: [
+                             { $match: { $expr: { $eq: ["$_id", "$$wwwww"] } } },
+                          ],
+                          as: "cursew",
                         },
-                    },
+                  },
                 ],
                 as: "integer",
-            },
+              },
         }
     ]);
     return res.json(Curses);
 };
-
-export async function getControllerteacher(req: Request, res: Response): Promise<Response> {
-    const { ObjectId } = require("mongodb");
-    const id = ObjectId(req.params.id);
-    const user = ObjectId(id);
-    //console.log(user,"hola")
-    const Curses = await User.aggregate([
-        {
-            $match: {
-                rol: "2",
-            },
-        },
-        {
-            $lookup: {
-                from: "curses",
-                let: { ww: "$_id" },
-                pipeline: [
-
-                    { $match: { $expr: { $and: [{ $eq: ["$user", "$$ww"] }, { $eq: ["$show", "true"] },] } } },
-                ],
-                as: "cursse",
-            },
-        },
-    ]);
-    return res.json(Curses);
-};
-
-
-///////////////////////////////////////////////////////////
-export async function updaterestricted_date(req: Request, res: Response): Promise<Response> {
-    const { ww, www } = req.body;
-    const setdate=await User.updateMany({}, { $set: { dateb:ww, datee:www } });
-    console.log(setdate)
-    return res.json("ok");
-};
-
-
 //2/////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 
@@ -157,7 +110,7 @@ export async function createController(req: Request, res: Response): Promise<Res
     } else {
         const foto = 'User';
     }
-    const Curse = await User.findOne({ email: email });
+    const Curse = await User.findOne({email:email});
     //const user = await User.findOne({ email: re });
     if (Curse) //return res.status(401).send('The email doen\' exists');
         return res.json({
@@ -176,25 +129,20 @@ export async function createController(req: Request, res: Response): Promise<Res
 //getupdateController/////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 export async function getupdateController(req: Request, res: Response): Promise<Response> {
-    const { ObjectId } = require("mongodb");
-    const user = ObjectId(req.params.id);
-    const Usser = await User.aggregate([
-        {
-            $match: {
-                _id: user,
-            },
+  const { ObjectId } = require("mongodb");
+  const user = ObjectId(req.params.id);
+  const Usser = await User.aggregate([
+    {
+        $lookup: {
+            from: "filecurses",
+            let: { www: "$_id" },
+            pipeline: [
+                { $match: { $expr: { $eq: ["$curse", "$$www"] } } },
+            ],
+            as: "archivos",
         },
-        {
-            $lookup: {
-                from: "filecurses",
-                let: { www: "$_id" },
-                pipeline: [
-                    { $match: { $expr: { $eq: ["$curse", "$$www"] } } },
-                ],
-                as: "archivos",
-            },
-        },
-    ]);
+    },
+  ]);
 
 
     return res.json(Usser);
@@ -205,7 +153,7 @@ export async function getupdateController(req: Request, res: Response): Promise<
 export async function deleteController(req: Request, res: Response): Promise<Response> {
     const { ObjectId } = require("mongodb");
     const id = ObjectId(req.params.id);
-    //usuario -- cursos(tareas...) fotos-cursos
+//usuario -- cursos(tareas...) fotos-cursos
     const Userw = await User.findByIdAndRemove(id) as IUser;
     await Integer.remove({ user: id });
     await Tasks.remove({ user: id });
@@ -225,8 +173,8 @@ export async function deleteController(req: Request, res: Response): Promise<Res
 
 export async function updateController(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const { name, email, password, rol, celular, carrera, mencion, ciclo, sexo, dni, filosophy } = req.body;
-    //console.log(req.file)
+    const { name, email, password, rol, celular, carrera, mension, ciclo, sexo, dni, filosophy } = req.body;
+//console.log(req.file)
     const updatedCurse = "";
     if (req.file) {
         const Curse = await User.findById(id) as IUser;
@@ -237,10 +185,10 @@ export async function updateController(req: Request, res: Response): Promise<Res
                 console.error(err);
             }
         }
-        const updatedCurse = await User.findByIdAndUpdate(id, { name, email, password, rol, celular, carrera, mencion, ciclo, sexo, dni, filosophy, foto: req.file.path });
+        const updatedCurse = await User.findByIdAndUpdate(id, { name, email, password, rol, celular, carrera, mension, ciclo, sexo, dni, filosophy, foto: req.file.path });
     } else {
         //await User.updateMany({rol:'2'}, {"$set": {"filosophy": filosophy}})
-        const updatedCurse = await User.findByIdAndUpdate(id, { name, email, password, rol, celular, carrera, mencion, ciclo, sexo, dni, filosophy });
+        const updatedCurse = await User.findByIdAndUpdate(id, {name, email, password, rol, celular, carrera, mension, ciclo, sexo, dni, filosophy });
     }
     return res.json({
         www: "actualizado correctamente"

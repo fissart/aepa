@@ -11,10 +11,9 @@ import {
     updateController,
     deleteController,
 getControlleruser,
-getControllerNotes,
 getintegerController
 } from '../2.controllers/6_integer.controller'
- 
+
 router.route('/Controller')
     .post(upload.single('image'), createController);
 
@@ -25,9 +24,6 @@ router.route('/Controller/:id')
 
 router.route('/Controllerintegerscurse/:id')
     .get(getController)
-
-    router.route('/Controllerintegerscursenotes/:id')
-        .get(getControllerNotes)
 
     router.route('/Controllerintegersaverage/:id')
         .get(getintegerController)

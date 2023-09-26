@@ -11,11 +11,12 @@ export class Svc23TESISService {
   constructor(private http: HttpClient) { }
   URI = `${environment.apiURL}/api/TESIS`;
 
-  save(user:string ) {
+  save(user:string, subtype:string ) {
   const fd = new FormData();
   fd.append('title', "Título");
   fd.append('description', "Breve  descripción");
   fd.append('user', user);
+  fd.append('subtype', subtype);
   return this.http.post(`${this.URI}`, fd );
   }
 

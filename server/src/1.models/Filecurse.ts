@@ -5,6 +5,12 @@ const schema = new Schema({
   codigo: String,
   type: String,
   img: String,
+  blogspot: String,
+  youtube: String,
+  instagram: String,
+  whatsapp: String,
+  facebook: String,
+  description: String,
   curse: {
     type: Schema.Types.ObjectId,
   }
@@ -15,6 +21,12 @@ export interface IFilecurse  extends Document {
   codigo: string,
   type: string;
   img: string,
+  blogspot: string,
+  youtube: string,
+  instagram: string,
+  whatsapp: string,
+  facebook: string,
+  description: string,
   curse: {
     type: Schema.Types.ObjectId,
   }

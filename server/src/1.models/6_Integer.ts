@@ -2,9 +2,8 @@
 import { Schema, model, Document } from 'mongoose'
 
 const schema = new Schema({
- show: String,
- codigo: String,
- curse: {
+  show: String,
+  curse: {
     type: Schema.Types.ObjectId,
   },
   user: {
@@ -17,7 +16,6 @@ const schema = new Schema({
 
 export interface IInteger extends Document {
   show: string,
-  codigo: string,
   curse: {
     type: Schema.Types.ObjectId,
   },

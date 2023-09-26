@@ -24,7 +24,7 @@ router.route('/:id')
 router.route('/getAveragesUser/:id')
     .get(getAveragesUserController);
 
-router.route('/First/:ciclo/:mencion/:year')
+router.route('/First/:ciclo/:mension/:year')
     .get(getFirstController);
 
 export default router;

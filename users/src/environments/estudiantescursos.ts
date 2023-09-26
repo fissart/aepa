@@ -1,83 +1,224 @@
-
-db.averages.updateMany({title: 'Tecnología de los Materiales I'}, {$set:{codigo:"CATMA107"}})
-db.averages.updateMany({title: 'Fotografía Artística I'}, {$set:{codigo:"CAFOR309"}})
-db.averages.updateMany({title: 'Morfología Visual I'}, {$set:{codigo:"CAMVI111"}})
-db.averages.updateMany({title: 'Comunicación Visual'}, {$set:{codigo:"CACVI205"}})
-db.averages.updateMany({title: 'Comunicación I'}, {$set:{codigo:"FGCOM101"}})
-db.averages.updateMany({title: 'Dibujo I'},  {$set:{codigo:"FEDIB115"}})
-db.averages.updateMany({title: 'Historia del Arte II'}, {$set:{codigo:"CAHAR207"}})
-db.averages.updateMany({title: 'Taller Principal V (PEG)'}, {$set:{codigo:"FETAP311"}})
-db.averages.updateMany({title: 'Dibujo III'},  {$set:{codigo:"FEDIB215"}})
-db.averages.updateMany({title: 'Geometría Descriptiva I'}, {$set:{codigo:"CAGDE211"}})
-db.averages.updateMany({title: 'Anatomía Artística II'}, {$set:{codigo:"CAAAR303"}})
-db.averages.updateMany({title: 'Investigación Artística III'}, {$set:{codigo:"FEINA507"}})
-db.averages.updateMany({title: 'Matemática Aplicada al Arte'}, {$set:{codigo:"FGMAA103"}})
-db.averages.updateMany({title: 'Dibujo V'} , {$set:{codigo:"FEDIB313"}})
-db.averages.updateMany({title: 'Ecosistema'},  {$set:{codigo:"FMECO201"}})
-db.averages.updateMany({title: 'Taller Principal III (PEG)'}, {$set:{codigo:"FETAP213"}})
-db.averages.updateMany({title: 'Filosofía del Arte'}, {$set:{codigo:"CAFAR307"}})
-db.averages.updateMany({title: 'Diseño Artístico Digital I'}, {$set:{codigo:"FEDAD315"}})
-db.averages.updateMany({title: 'Semiótica del Arte'}, {$set:{codigo:"CASAR301"}})
-db.averages.updateMany({title: 'Taller Principal I (PEG)'}, {$set:{codigo:"FETAP113"}})
-db.averages.updateMany({title: 'Fundamentos Visuales I'}, {$set:{codigo:"CAFVI109"}})
-db.averages.updateMany({title: 'Historia del Arte VI'}, {$set:{codigo:"CAHAR305"}})
-db.averages.updateMany({title: 'Métodos de Estudios Superiores'}, {$set:{codigo:"FGMES105"}})
-db.averages.updateMany({title: 'Cerámica II'},  {$set:{codigo:"FECER413"}})
-db.averages.updateMany({title: 'Fundamentos Visuales III'}, {$set:{codigo:"CAFVI203"}})
-db.averages.updateMany({title: 'Psicología del Arte'}, {$set:{codigo:"CAPÀR209"}})
-db.averages.updateMany({title: 'Proyectos Artísticos Culturales'}, {$set:{codigo:"CAPAC501"}})
-db.averages.updateMany({title: 'Historia del Arte IV'}, {$set:{codigo:"CAHAR401"}})
-db.averages.updateMany({title: 'Taller Principal VII (PEG)'}, {$set:{codigo:"FETAP405"}})
-db.averages.updateMany({title: 'Seminario Artístico Digital II'}, {$set:{codigo:"FESAD505"}})
-db.averages.updateMany({title: 'Arte Virtual'}, {$set:{codigo:"FEAVI409"}})
-db.averages.updateMany({title: 'Crítica del Arte'}, {$set:{codigo:"CACRA403"}})
-db.averages.updateMany({title: 'Taller Principal IX (PEG)'}, {$set:{codigo:"FETAP503"}})
-db.averages.updateMany({title: 'Dibujo VII'},  {$set:{codigo:"FEDIB407"}})
-db.averages.updateMany({title: 'Investigación Artística I'}, {$set:{codigo:"FEINA411"}})
-db.averages.updateMany({title: 'Práctica Pre Profesional I'}, {$set:{codigo:"FEPPP511"}})
-db.averages.updateMany({title: 'Taller de Conservación y Restauración II'}, {$set:{codigo:"FETCR509"}})
-
-
-
-
-db.averages.updateMany({title: 'Elementos Estéticos I'},{$set:{codigo:"AFPEE115"}})
-db.averages.updateMany({title: 'Comunicación I'},{$set:{codigo:"ABCOM101"}})
-db.averages.updateMany({title: 'Perspectiva'}, {$set:{codigo:"AFPPE113"}})
-db.averages.updateMany({title: 'Dibujo I'}, {$set:{codigo:"AFPDI107"}})
-db.averages.updateMany({title: 'Dibujo III'}, {$set:{codigo:"AFPDI211"}})
-db.averages.updateMany({title: 'Sociedad I'}, {$set:{codigo:"ABSOC203"}})
-db.averages.updateMany({title: 'Pintura I'}, {$set:{codigo:"AFPPI109"}})
-db.averages.updateMany({title: 'Didáctica de las Artes II'},{$set:{codigo:"AEDIA205"}})
-db.averages.updateMany({title: 'Escultura I'}, {$set:{codigo:"AFPES111"}})
-db.averages.updateMany({title: 'Morfología Visual'},{$set:{"AFPMV11codigo:7AFPMV117"}})
-db.averages.updateMany({title: 'Investigación II'},{$set:{codigo:"AEINV503"}})
-db.averages.updateMany({title: 'Historia del Arte I'},{$set:{codigo:"AFPHA217"}})
-db.averages.updateMany({title: 'Taller Regional I'},{$set:{codigo:"AFPTR315"}})
-db.averages.updateMany({title: 'Grabado III'}, {$set:{codigo:"AFPGR411"}})
-db.averages.updateMany({title: 'Retrato I'}, {$set:{codigo:"AFPTE417"}})
-db.averages.updateMany({title: 'Historia del Arte III'},{$set:{codigo:"AFPHA319"}})
-db.averages.updateMany({title: 'Diseño Artístico'},{$set:{codigo:"AFPDA219"}})
-db.averages.updateMany({title: 'Teatro I'}, {$set:{codigo:"AFPRE409"}})
-db.averages.updateMany({title: 'Danza I'}, {$set:{codigo:"AFPDA507"}})
-db.averages.updateMany({title: 'Tutoría y Práctica Pedagógica I'},{$set:{codigo:"AFPPP419"}})
-db.averages.updateMany({title: 'Didáctica de las Artes IV'},{$set:{codigo:"AEDIA307"}})
-db.averages.updateMany({title: 'Filosofía II'},{$set:{codigo:"ABFIL403"}})
-db.averages.updateMany({title: 'Cerámica I'}, {$set:{codigo:"AFPCE413"}})
-db.averages.updateMany({title: 'Integración Artística II'},{$set:{codigo:"AFPIA412"}})
-db.averages.updateMany({title: 'Psicología II'},{$set:{codigo:"AEPSI311"}})
-db.averages.updateMany({title: 'Escultura III'},{$set:{codigo:"AFPES215"}})
-db.averages.updateMany({title: 'Dibujo V'}, {$set:{codigo:"AFPDI313"}})
-db.averages.updateMany({title: 'Teoría de la Educación II'},{$set:{codigo:"AETED309"}})
-db.averages.updateMany({title: 'Música II'}, {$set:{codigo:"AFPMU415"}})
-db.averages.updateMany({title: 'Métodos de Estudios Superiores'},{$set:{codigo:"ABMES103"}})
-db.averages.updateMany({title: 'Matemática I'},{$set:{codigo:"ABMAT201"}})
-db.averages.updateMany({title: 'Pintura III'}, {$set:{codigo:"AFPPI213"}})
-db.averages.updateMany({title: 'Currículo Tecnología y Gestión IV'},{$set:{codigo:"AECTG501"}})
-db.averages.updateMany({title: 'Currículo Tecnología y Gestión II'},{$set:{codigo:"AECTG405"}})
-db.averages.updateMany({title: 'Tutoría y Práctica Pedagógica III'},{$set:{codigo:"AFPPP509"}})
-db.averages.updateMany({title: 'Grabado I'},{$set:{codigo:"AFPGR317"}})
-
-
-
-
-
+//"name":"PARRA BELLO, Ladislao", "user":ObjectId("62cf3499f1443acd8c3dc418"),
+db.users.insertMany(
+[
+  {title:"Anatomia Artística II", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc418", img:"img", description:"w_w", year:"2022"},
+  {title:"Dibujo V -PINTURA", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc418", img:"img", description:"w_w", year:"2022"},
+  {title:"Dibujo III", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc418", img:"img", description:"w_w", year:"2022"}
+]
+//"name":"PALOMINO HUAMÁN, Zenobio Orlando ", "user":ObjectId("62cf3499f1443acd8c3dc419"),
+db.users.insertMany(
+[
+  {title:"Ceramica I - EDUCACIÓN", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc419", img:"img", description:"w_w", year:"2022"},
+  {title:"Taller principal IX - Pintura", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc419", img:"img", description:"w_w", year:"2022"},
+  {title:"Ceramica II -ARTISTA PROFESIONAL", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc419", img:"img", description:"w_w", year:"2022"}
+]
+//"name":"MARTINEZ PAREDES, Kenneth Claudio", "user":ObjectId("62cf3499f1443acd8c3dc41a"),
+db.users.insertMany(
+[
+  {title:"T.P V - Pintura", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc41a", img:"img", description:"w_w", year:"2022"},
+  {title:"T.P.VII Pintura", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc41a", img:"img", description:"w_w", year:"2022"}
+]
+//"name":"SOLAR BECERRA, Belarmina", "user":ObjectId("62cf3499f1443acd8c3dc41b"),
+db.users.insertMany(
+[
+  {title:"TP - I GRABADO", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc41b", img:"img", description:"w_w", year:"2022"},
+  {title:"Dibujo VII -PINTURA", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc41b", img:"img", description:"w_w", year:"2022"},
+  {title:"T.P.III - AP", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc41b", img:"img", description:"w_w", year:"2022"}
+]
+//"name":"QUISPE PALOMINO, Santiago Alberto", "user":ObjectId("62cf3499f1443acd8c3dc41c"),
+db.users.insertMany(
+[
+  {title:"TP IX -GRABADO", ciclo: "I", especialidad: "1", user: "62cf3499f1443acd8c3dc41c", img:"img", description:"w_w", year:"2022"},
+  {title:"DIBUJO VII - GRABADO", ciclo: "2", especialidad: "", user: "62cf3499f1443acd8c3dc41c", img:"img", description:"w_w", year:"2022"},
+  {title:"Dibujo V", ciclo: "", especialidad: "3", user: "62cf3499f1443acd8c3dc41c", img:"img", description:"w_w", year:"2022"}
+]
+//"name":"PRADO BAUTISTA, Jesús", "user":ObjectId("62cf3499f1443acd8c3dc41d"),
+db.users.insertMany(
+[
+  {title:"TP IX - ESCULTURA", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc41d", img:"img", description:"w_w", year:"2022"},
+  {title:"ESCULTURA I - EDUCACIÓN", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc41d", img:"img", description:"w_w", year:"2022"},
+  {title:"DIBUJO I - EDUCACIÓN", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc41d", img:"img", description:"w_w", year:"2022"}
+]
+//"name":"CÓRDOVA HERNÁNDEZ, Amanda Luzmila", "user":ObjectId("62cf3499f1443acd8c3dc41e"),
+db.users.insertMany(
+[
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc41e", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc41e", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc41e", img:"img", description:"w_w", year:"2022"}
+]
+//"name":"ALVAREZ ENRIQUEZ, Eleodoro", "user":ObjectId("62cf3499f1443acd8c3dc41f"),
+db.users.insertMany(
+[
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc41f", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc41f", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc41f", img:"img", description:"w_w", year:"2022"}
+]
+//"name":"ARISTE GUERREROS, Luis Carlos", "user":ObjectId("62cf3499f1443acd8c3dc420"),
+db.users.insertMany(
+[
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc420", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc420", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc420", img:"img", description:"w_w", year:"2022"}
+]
+//"name":"CCAICO RAMOS, Constantino", "user":ObjectId("62cf3499f1443acd8c3dc421"),
+db.users.insertMany(
+[
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc421", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc421", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc421", img:"img", description:"w_w", year:"2022"}
+]
+//"name":"ARONÉS ALVARO, Julio Javier", "user":ObjectId("62cf3499f1443acd8c3dc422"),
+db.users.insertMany(
+[
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc422", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc422", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc422", img:"img", description:"w_w", year:"2022"}
+]
+//"name":"ANCHAHUA HUAMANÍ, Moisés", "user":ObjectId("62cf3499f1443acd8c3dc423"),
+db.users.insertMany(
+[
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc423", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc423", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc423", img:"img", description:"w_w", year:"2022"}
+]
+//"name":"ASTO SULCA, Nancy", "user":ObjectId("62cf3499f1443acd8c3dc424"),
+db.users.insertMany(
+[
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc424", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc424", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc424", img:"img", description:"w_w", year:"2022"}
+]
+//"name":"CABRERA LLANTOY, Reynaldo", "user":ObjectId("62cf3499f1443acd8c3dc425"),
+db.users.insertMany(
+[
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc425", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc425", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc425", img:"img", description:"w_w", year:"2022"}
+]
+//"name":"CANCHARI SOLÍS, José", "user":ObjectId("62cf3499f1443acd8c3dc426"),
+db.users.insertMany(
+[
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc426", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc426", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc426", img:"img", description:"w_w", year:"2022"}
+]
+//"name":"CHUCHON FERIA, Juan Mauro", "user":ObjectId("62cf3499f1443acd8c3dc427"),
+db.users.insertMany(
+[
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc427", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc427", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc427", img:"img", description:"w_w", year:"2022"}
+]
+//"name":"CORDERO AYBAR, Olimpia", "user":ObjectId("62cf3499f1443acd8c3dc428"),
+db.users.insertMany(
+[
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc428", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc428", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc428", img:"img", description:"w_w", year:"2022"}
+]
+//"name":"MALLQUI BAÑOS, RICARDO MICHEL", "user":ObjectId("62cf3499f1443acd8c3dc429"),
+db.users.insertMany(
+[
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc429", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc429", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc429", img:"img", description:"w_w", year:"2022"}
+]
+//"name":"MIRANDA PEREIRA, Labslov Enrique", "user":ObjectId("62cf3499f1443acd8c3dc42a"),
+db.users.insertMany(
+[
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc42a", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc42a", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc42a", img:"img", description:"w_w", year:"2022"}
+]
+//"name":"ORIUNDO MORA, Katia", "user":ObjectId("62cf3499f1443acd8c3dc42b"),
+db.users.insertMany(
+[
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc42b", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc42b", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc42b", img:"img", description:"w_w", year:"2022"}
+]
+//"name":"QUISPE PIZARRO, Reyder Necao", "user":ObjectId("62cf3499f1443acd8c3dc42c"),
+db.users.insertMany(
+[
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc42c", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc42c", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc42c", img:"img", description:"w_w", year:"2022"}
+]
+//"name":"ROJAS CONDE,William", "user":ObjectId("62cf3499f1443acd8c3dc42d"),
+db.users.insertMany(
+[
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc42d", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc42d", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc42d", img:"img", description:"w_w", year:"2022"}
+]
+//"name":"SABASTIZAGAL ORELLANA, Edgar Allan", "user":ObjectId("62cf3499f1443acd8c3dc42e"),
+db.users.insertMany(
+[
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc42e", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc42e", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc42e", img:"img", description:"w_w", year:"2022"}
+]
+//"name":"SULCA AVILES, Richard", "user":ObjectId("62cf3499f1443acd8c3dc42f"),
+db.users.insertMany(
+[
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc42f", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc42f", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc42f", img:"img", description:"w_w", year:"2022"}
+]
+//"name":"SULLA VALDEZ, Saúl ", "user":ObjectId("62cf3499f1443acd8c3dc430"),
+db.users.insertMany(
+[
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc430", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc430", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc430", img:"img", description:"w_w", year:"2022"}
+]
+//"name":"TORRE MALPARTIDA, Robert Escolástico", "user":ObjectId("62cf3499f1443acd8c3dc431"),
+db.users.insertMany(
+[
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc431", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc431", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc431", img:"img", description:"w_w", year:"2022"}
+]
+//"name":"TORRES VIACAVA, Teófilo", "user":ObjectId("62cf3499f1443acd8c3dc432"),
+db.users.insertMany(
+[
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc432", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc432", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc432", img:"img", description:"w_w", year:"2022"}
+]
+//"name":"VIZA BAYONA, Nancy Estefanía", "user":ObjectId("62cf3499f1443acd8c3dc433"),
+db.users.insertMany(
+[
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc433", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc433", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc433", img:"img", description:"w_w", year:"2022"}
+]
+//"name":"CCONISLLA ARMBURU, Edwin Wilian", "user":ObjectId("62cf3499f1443acd8c3dc434"),
+db.users.insertMany(
+[
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc434", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc434", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc434", img:"img", description:"w_w", year:"2022"}
+]
+//"name":"RAMOS HUACHACA, Roger Rolando", "user":ObjectId("62cf3499f1443acd8c3dc435"),
+db.users.insertMany(
+[
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc435", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc435", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc435", img:"img", description:"w_w", year:"2022"}
+]
+//"name":"JAUREGUI ORMAZA, Einer Hugo", "user":ObjectId("62cf3499f1443acd8c3dc436"),
+db.users.insertMany(
+[
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc436", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc436", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc436", img:"img", description:"w_w", year:"2022"}
+]
+//"name":"APCHO MONTES, Kattia ", "user":ObjectId("62cf3499f1443acd8c3dc437"),
+db.users.insertMany(
+[
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc437", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc437", img:"img", description:"w_w", year:"2022"},
+  {title:"", ciclo: "", especialidad: "", user: "62cf3499f1443acd8c3dc437", img:"img", description:"w_w", year:"2022"}
+]
+//

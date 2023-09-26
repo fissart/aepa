@@ -4,7 +4,6 @@ import path from 'path'
 
 // Models
 import Curse, { ITheme } from '../1.models/4_Theme';
-import Task, { ITask } from '../1.models/5_Task';
 
 
 //getsController/////////////////////////////////////////////////////////////////////////
@@ -13,7 +12,7 @@ export async function getsController(req: Request, res: Response): Promise<Respo
     const Curses = await Curse.find();
     return res.json(Curses);
 };
- 
+
 //getupdateController/////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 export async function getupdateController(req: Request, res: Response): Promise<Response> {
@@ -44,15 +43,17 @@ export async function getupdateController(req: Request, res: Response): Promise<
                                         let: { w_ww: "$_id" },
                                         pipeline: [
                                           {$match: { $expr: { $and: [{ $eq: ["$user", "$$w_ww"] }, { $eq: ["$theme",  '$$ww_w' ] },] } }},
+
                                         ],
                                         as: "tassk",
                                     },
+
                                 },
                             ],
                             as: "Usser",
                         },
+
                     },
-                    {$sort: {  'Usser.name': 1 }},
                 ],
                 as: "integgers",
             },
@@ -119,13 +120,12 @@ export async function getController(req: Request, res: Response): Promise<Respon
 //deleteController/////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 export async function deleteController(req: Request, res: Response): Promise<Response> {
-    const { ObjectId } = require("mongodb");
-    const id = ObjectId(req.params.id);
+    //const { ObjectId } = require("mongodb");
+    //const id = ObjectId(req.params.id);
     //await Opinion.deleteMany({ imageid: id });
     const Curseww = await Curse.findByIdAndRemove(req.params.id) as ITheme;
     //const Curse = await Curse.findByIdAndRemove(id) as ICurse;
-    await Task.deleteMany({'theme' : id});
-     /*
+    /*
     if (Curseww) {
         try {
             //fs.unlinkSync("files/tasks/" + file);
@@ -135,7 +135,7 @@ export async function deleteController(req: Request, res: Response): Promise<Res
         }
     }
     */
-    return res.json({ message: { "msg": "El usuario no esta registrado" } });
+    return res.json({ message: 'Successfully deleted theme' });
 };
 
 //updateController/////////////////////////////////////////////////////////////////////////

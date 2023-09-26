@@ -17,53 +17,65 @@ export class CurseService {
   constructor(private http: HttpClient) { }
 
   //URI = environment.apiURL + '/api/photos'
-  createCurse(user: string) {
+  createCurse(user: string ) {
     const fd = new FormData();
     fd.append('title', "Título del curso");
     fd.append('description', "Descripción del curso");
     fd.append('image', "photo  del curso");
     fd.append('user', user);
-    return this.http.post(this.URIw, fd, { reportProgress: true, observe: "events" });
+    return this.http.post(this.URIw, fd, {reportProgress:true, observe:"events"});
   }
 
-  filecurse(id: string, title: string, type: string, codigo: string, photo: File) {
-    const fd = new FormData();
-    fd.append('title', title);
-    fd.append('type', type);
-    fd.append('codigo', codigo);
-    fd.append('curse', id);
-    fd.append('image', photo);
-    return this.http.post(`${environment.apiURL}/api/FilecurseTeacher/`, fd, { reportProgress: true, observe: "events" });
-  }
-
-  filecursedelete(id: string) {
-    return this.http.delete(`${environment.apiURL}/api/FilecurseTeacher/${id}`);
-  }
-
-  filecurseupdate(id: string, title: string) {
-    return this.http.put(`${environment.apiURL}/api/FilecurseTeacher/${id}`, { 'title': title });
-  }
-
-  /*
-    filecurse(curse: string, title: string, www: File ) {
+  filecurse(id: string, title: string, type: string, codigo:string, photo:File) {
       const fd = new FormData();
       fd.append('title', title);
-      fd.append('curse', curse);
-      fd.append('img', www);
-      console.log(www);
-  
-      return this.http.post(`${environment.apiURL}/api/curses/`, fd, {reportProgress:true, observe:"events"});
+      fd.append('type', type);
+      fd.append('codigo', codigo);
+      fd.append('curse', id);
+      fd.append('description', "Describa el archivo");
+      fd.append('image', photo);
+      return this.http.post(`${environment.apiURL}/api/FilecurseTeacher/`, fd, {reportProgress:true, observe:"events"});
     }
-  */
 
-  createCurseNew(iduser: string, year: number, title: string, especialidad: string, mension: string, credito: string, ciclo: string, codigo: string, requisito: string) {
+    getfiles() {
+            return this.http.get(`${environment.apiURL}/api/FilecurseTeacher`);
+    }
+
+
+    filecursedelete(id: string) {
+        return this.http.delete(`${environment.apiURL}/api/FilecurseTeacher/${id}`);
+      }
+
+      filecurseupdate(id: string, title: string, description: string, blogspot: string, youtube: string, instagram: string, whatsapp: string, facebook: string) {
+          return this.http.put(`${environment.apiURL}/api/FilecurseTeacher/${id}`, {'title':title, 'description': description, blogspot, youtube, instagram, whatsapp, facebook });
+    }
+ 
+    filecurseupdatefile(id: string, photo:File) {
+          const fd = new FormData();
+          fd.append('image', photo);
+          return this.http.put(`${environment.apiURL}/api/FilecurseTeacher/update/${id}`, fd, {reportProgress:true, observe:"events"});
+  }
+  
+/*
+  filecurse(curse: string, title: string, www: File ) {
+    const fd = new FormData();
+    fd.append('title', title);
+    fd.append('curse', curse);
+    fd.append('img', www);
+    console.log(www);
+
+    return this.http.post(`${environment.apiURL}/api/curses/`, fd, {reportProgress:true, observe:"events"});
+  }
+*/
+
+  createCurseNew(iduser: string, year: number, title: string, especialidad: string, mension: string, credito: string, ciclo: string, codigo: string, requisito: string ) {
     const fd = new FormData();
     fd.append('description', `<h5>Descripción del Curso</h5>
 <p>En este sitio podrás encontrar información relacionada con los diversos Modelos de Orientación Psicopedagógica existentes y todo lo relacionado con los mismos. El objetivo es proveer información útil que pueda ser aplicada en el ámbito de orientación y que permita desarrollar programas y otro tipo de estrategias que resulten de beneficio para los diversos actores en el ámbito educativo: maestros, alumnos, padres de familia, directivos, entre otros.</p>
 
 <h5>Objetivos</h5>
 <p>Los objetivos planeados para el curso son los siguientes:</p>
-<ol> 
+<ol>
 <li>Identificar, relacionar e integrar los modelos de orientación psicopedagógica y sus elementos, en la implementación de procesos de intervención en instituciones educativas.</li>
 <li>Argumentar, elaborar y aplicar desde distintas perspectivas, los modelos de intervención en contextos educativos.</li>
 <li>Esforzarse por obtener la mayor calidad en todo lo que emprende, intentando alcanzar resultados positivos.</li>
@@ -81,7 +93,7 @@ export class CurseService {
     return this.http.post(this.URIw, fd);
   }
 
-  createUnity(user: string, curse: string, codecurse: string) {
+  createUnity(user: string, curse:string, codecurse:string ) {
     const fd = new FormData();
     fd.append('title', "Título de la unidad");
     fd.append('description', "Descripción de la unidad");
@@ -93,31 +105,31 @@ export class CurseService {
     fd.append('time', "2022-12-12");
     fd.append('user', user);
     fd.append('curse', curse);
-    return this.http.post(this.URI, fd, { reportProgress: true, observe: "events" });
+    return this.http.post(this.URI, fd, {reportProgress:true, observe:"events"});
   }
 
 
 
-  getcurseuseronly(id: string) {
-    return this.http.get(`${environment.apiURL}/api/integer/Controllerintegeruser/${id}`);
-    //console.log(id)
+  getcurseuseronly(id:string) {
+          return this.http.get(`${environment.apiURL}/api/integer/Controllerintegeruser/${id}`);
+//console.log(id)
   }
- 
-  getsCurseTeacher(id: string, curseshow: string) {
-    return this.http.get(`${environment.apiURL}/api/curses/ControllerCurseTeacher/${id}/${curseshow}`);
 
-  }
+getsCurseTeacher(id:string) {
+        return this.http.get(`${environment.apiURL}/api/curses/ControllerCurseTeacher/${id}`);
+
+}
 
   getPhoto(id: string) {
     return this.http.get<any>(`${this.URIw}/${id}`);
     console.log(`${this.URIw}/${id}`);
   }
 
-  getPhotosUser(id: string) {
+    getPhotosUser(id: string) {
     return this.http.get<any>(`${environment.apiURL}/api/curses/getsControllerUser/${id}`);
   }
 
-  getUnity(id: string) {
+getUnity(id: string) {
     return this.http.get<any>(`${this.URI}/${id}`);
   }
 
@@ -133,26 +145,21 @@ export class CurseService {
   deletePhoto(id: string) {
     return this.http.delete(`${this.URIw}/${id}`);
   }
-  /*
-  Curse
-  */
-  updatePhoto(id: string, title: string, description: string, meet: string, show:string, photo: File) {
+/*
+Curse
+*/
+updatePhoto(id: string, title: string, description: string, meet :string, photo:File) {
     const fd = new FormData();
     fd.append('title', title);
     fd.append('meet', meet);
-    fd.append('show', show);
     fd.append('description', description);
     fd.append('image', photo);
-    return this.http.put(`${this.URIw}/${id}`, fd, { reportProgress: true, observe: "events" });
-    //    return this.http.put(`${this.URI}/${id}`, { 'name': title, 'email': description, 'password':password });
+    return this.http.put(`${this.URIw}/${id}`, fd, {reportProgress:true, observe:"events"});
+//    return this.http.put(`${this.URI}/${id}`, { 'name': title, 'email': description, 'password':password });
   }
 
-  Updatehidecurse(id: string, show: string) {
-    return this.http.put(`${this.URIw}/updatecursehide/${id}`, { 'show': show, });
-    //    return this.http.put(`${this.URI}/${id}`, { 'name': title, 'email': description, 'password':password });
-  }
 
-  updateUnity(id: string, title: string, description: string, task: string, test: string, time: string, timeex: string) {
+updateUnity(id: string, title: string, description: string,  task: string,  test: string,  time: string, timeex: string) {
     const fd = new FormData();
     fd.append('title', title);
     fd.append('description', description);
@@ -160,16 +167,16 @@ export class CurseService {
     fd.append('test', test);
     fd.append('time', time);
     fd.append('timeex', timeex);
-    return this.http.put(`${this.URI}/${id}`, fd, { reportProgress: true, observe: "events" });
+    return this.http.put(`${this.URI}/${id}`, fd, {reportProgress:true, observe:"events"});
     //fd.append('image', photo);
-    //    return this.http.put(`${this.URI}/${id}`, { 'name': title, 'email': description, 'password':password });
-  }
+//    return this.http.put(`${this.URI}/${id}`, { 'name': title, 'email': description, 'password':password });
+}
 
 
-  saveinteger(iduser: string, idcurso: string, iduserteach: string, codigo: string) {
-    console.log(iduser, idcurso, iduserteach, codigo)
-    return this.http.post<any>(`${environment.apiURL}/api/integer/Controller`, { 'curse': idcurso, 'user': iduser, 'userteach': iduserteach, codigo: codigo });
-  }
+saveinteger(iduser:string,idcurso:string,iduserteach:string){
+        console.log(iduser, idcurso, iduserteach )
+        return this.http.post<any>(`${environment.apiURL}/api/integer/Controller`, {'curse':idcurso, 'user':iduser, 'userteach':iduserteach});
+    }
 
 
 
@@ -178,24 +185,20 @@ export class CurseService {
   }
 
 
-  getintegers(id: string) {
-    return this.http.get(`${environment.apiURL}/api/integer/Controllerintegerscurse/${id}`);
-  }  
-  getintegersnotes(id: string) {
-    return this.http.get(`${environment.apiURL}/api/integer/Controllerintegerscursenotes/${id}`);
+  getintegers(id: string){
+      return this.http.get(`${environment.apiURL}/api/integer/Controllerintegerscurse/${id}`);
   }
-  getintegersaverage(id: string) {
-    return this.http.get(`${environment.apiURL}/api/integer/Controllerintegersaverage/${id}`);
+  getintegersaverage(id: string){
+      return this.http.get(`${environment.apiURL}/api/integer/Controllerintegersaverage/${id}`);
   }
 
-  //URI2 = environment.apiURL + '/api/wwu'
+//URI2 = environment.apiURL + '/api/wwu'
   getPhotouser(iduser: string) {
     return this.http.get<any>(`${this.URI2}/www/${iduser}`);
   }
 
-  newscreate(iduser: string) {
-    return this.http.post(`${environment.apiURL}/api/news/Controller`, {
-      'user': iduser, "title": "Title new", "description": `Este es un modelo de como puede escribir (formato html y css) en esta área borre todo y escriba<h1 class='bg-info text-success border p-1 rounded'>Titulo</h1>
+  newscreate(iduser: string){
+          return this.http.post(`${environment.apiURL}/api/news/Controller`, {'user':iduser, "title":"Title new", "description": `Este es un modelo de como puede escribir (formato html y css) en esta área borre todo y escriba<h1 class='bg-info text-success border p-1 rounded'>Titulo</h1>
           <h2 class='bg-info text-light border rounded text-success p-1'>Titulo</h2>
           <h3 class='bg-light border rounded text-success p-1'>Titulo</h3>
         <img class='bg-light p-1 m-auto'
@@ -211,44 +214,43 @@ export class CurseService {
 
         $$\\begin{Bmatrix} a & b \\\\   c & d\\end{Bmatrix}$$
 
-        $$\\int_1^3=\\lim_{n\\to\\infty}\\sum_{n\\to\\infty}^n x_i$$ donde $x\\in\\mathbb{R}$`, "show": false
-    });
-  }
+        $$\\int_1^3=\\lim_{n\\to\\infty}\\sum_{n\\to\\infty}^n x_i$$ donde $x\\in\\mathbb{R}$`, "show":false});
+      }
 
-  Getnews(iduser: string) {
-    return this.http.get<any>(`${environment.apiURL}/api/news/ControllerAll`);
-  }
+        Getnews(iduser: string){
+                return this.http.get<any>(`${environment.apiURL}/api/news/ControllerAll`);
+            }
 
-  newsupdate(newid: string, title: string, description: string, show: string, filew: File) {
+            newsupdate(newid: string, title: string, description: string,  show: string, filew:File) {
 
-    const fd = new FormData();
-    fd.append('title', title);
-    fd.append('description', description);
-    fd.append('show', show);
-    fd.append('image', filew);
-    return this.http.put(`${environment.apiURL}/api/news/Controller/${newid}`, fd, { reportProgress: true, observe: "events" });
-  }
+              const fd = new FormData();
+              fd.append('title', title);
+              fd.append('description', description);
+              fd.append('show', show);
+              fd.append('image', filew);
+              return this.http.put(`${environment.apiURL}/api/news/Controller/${newid}`, fd, {reportProgress:true, observe:"events"});
+            }
 
-  newsdelete(newid: string) {
-    return this.http.delete(`${environment.apiURL}/api/news/Controller/${newid}`);
-  }
+            newsdelete(newid: string) {
+              return this.http.delete(`${environment.apiURL}/api/news/Controller/${newid}`);
+            }
 
-  GetCalificationsuser(iduser: string) {
-    return this.http.get<any>(`${environment.apiURL}/api/AVERAGE/getAveragesUser/${iduser}`);
-  }
+            GetCalificationsuser(iduser: string){
+                    return this.http.get<any>(`${environment.apiURL}/api/AVERAGE/getAveragesUser/${iduser}`);
+                }
 
-  Getcursesources() {
-    return this.http.get<any>(`${environment.apiURL}/api/curses/getcursesources`);
-  }
+      Getcursesources(){
+              return this.http.get<any>(`${environment.apiURL}/api/curses/getcursesources`);
+          }
 
-  showhidenews(newid: string, show: string) {
-    console.log(show);
-    return this.http.put(`${environment.apiURL}/api/news/Controller_show/${newid}`, { 'show': show });
-  } 
+showhidenews(newid: string, show: string) {
+  console.log(show);
+  return this.http.put(`${environment.apiURL}/api/news/Controller_show/${newid}`, { 'show': show});
+}
 
 
-  getFirstAverages(ciclo: string, mencion: string, year: string) {
-    return this.http.get(`${environment.apiURL}/api/AVERAGE/First/${ciclo}/${mencion}/${year}`);
-  }
+getFirstAverages(ciclo: string, mension: string, year: string) {
+  return this.http.get(`${environment.apiURL}/api/AVERAGE/First/${ciclo}/${mension}/${year}`);
+}
 
 }

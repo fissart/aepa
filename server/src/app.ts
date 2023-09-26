@@ -4,7 +4,6 @@ import path from 'path';
 import cors from 'cors';
 
 import news from './3.routes/1_new.route'
-import land from './server/land.route'
 import user from './3.routes/1_users.route'
 import curse from './3.routes/2_curses.route'
 import section from './3.routes/3_sections.route'
@@ -29,7 +28,6 @@ app.use(express.json());
 
 // Routes
 app.use("/api/news", news);
-app.use("/api/land", land);
 app.use('/api/users', user);
 app.use("/api/curses", curse);
 app.use("/api/sections", section);

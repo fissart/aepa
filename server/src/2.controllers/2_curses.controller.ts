@@ -18,21 +18,8 @@ import Section, { ISection } from '../1.models/3_Section';
 //getsController/////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 export async function getcursesources(req: Request, res: Response): Promise<Response> {
-    //var date = new Date().getDate();
-    var month = new Date().getMonth();
-    //this.year = new Date().getFullYear();
-console.log(month)
-    //this.Tw.setTitle('Inicio ESFAP');
-    //var meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'setiembre', 'w10', 'w11', 'w12']
-    //this.mes = meses[month]
-    if (month <= 6) {
-        const Curses = await Cursesource.find({ ciclo: { $in: ['I', 'III', 'V', 'VII', 'IX'] }, mencion: { $in: ['ED', 'G'] } })
-        return res.json(Curses);
-    } else {
-        const Curses = await Cursesource.find({ ciclo: { $in: ['II', 'IV', 'VI', 'VIII', 'X'] } })
-        return res.json(Curses);
-    }
-    //return res.json("Curses");
+      const Curses = await Cursesource.find({ciclo:{$in: ['II', 'IV', 'VI', 'VIII', 'X']}});
+      return res.json(Curses);
 };
 
 //getsController/////////////////////////////////////////////////////////////////////////
@@ -41,20 +28,19 @@ export async function getsController(req: Request, res: Response): Promise<Respo
     const { ObjectId } = require("mongodb");
     const id = ObjectId(req.params.id);
     const user = ObjectId(id);
-    const curseshow = req.params.curseshow;
     const Curses = await User.aggregate([
-        {
-            $match: {
-                _id: user,
-            },
-        },
-        {
+      {
+          $match: {
+              _id: user,
+          },
+      },
+      {
             $lookup: {
                 from: "curses",
                 let: { www: "$_id" },
                 pipeline: [
 
-                    { $match: { $expr: { $and: [{ $eq: ["$user", "$$www"] }, { $eq: ["$show", curseshow] },] } } },
+                    {$match: { $expr: { $and: [{ $eq: ["$user", "$$www"] }, { $eq: ["$show",  "true"] },] } }},
 
                     {
                         $lookup: {
@@ -70,7 +56,7 @@ export async function getsController(req: Request, res: Response): Promise<Respo
                 ],
                 as: "curses",
             },
-        },
+      },
     ]);
 
     //const Curses = await Curse.find();
@@ -95,23 +81,17 @@ export async function getsControllerUser(req: Request, res: Response): Promise<R
                 as: "user",
             },
 
-        }, {
+        },{
             $lookup: {
                 from: "integers",
                 let: { curse: "$_id" },
                 pipeline: [
-                    {
-                        $match: {
-                            $expr: {
-                                $and: [
-                                    { $eq: ["$curse", "$$curse"] },
-                                    {
-                                        $eq: ["$user", curso],
-                                    },
-                                ],
-                            }
-                        }
-                    }
+                    { $match: { $expr: {$and: [
+                        { $eq: ["$curse", "$$curse"] },
+                        {
+                          $eq: ["$user", curso ],
+                        },
+                      ],} } }
                 ],
                 as: "integer",
             },
@@ -137,53 +117,53 @@ export async function getsControllerUser(req: Request, res: Response): Promise<R
 //getupdateController/////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 export async function getupdateController(req: Request, res: Response): Promise<Response> {
-    const { ObjectId } = require("mongodb");
+  const { ObjectId } = require("mongodb");
     const { id } = req.params;
     const curso = ObjectId(req.params.id)
     //const www = await Curse.findById(id);
     const curses = await Curse.aggregate([
-        {
-            $match: {
-                _id: curso,
-            },
-        },
-        {
-            $lookup: {
-                from: "filecurses",
-                let: { www: "$_id" },
-                pipeline: [
-                    { $match: { $expr: { $eq: ["$curse", "$$www"] } } },
-                ],
-                as: "archivos",
-            },
-        },
+      {
+          $match: {
+              _id: curso,
+          },
+      },
+      {
+          $lookup: {
+              from: "filecurses",
+              let: { www: "$_id" },
+              pipeline: [
+                  { $match: { $expr: { $eq: ["$curse", "$$www"] } } },
+              ],
+              as: "archivos",
+          },
+      },
     ]);
-    //console.log(ww);
+//console.log(ww);
 
     return res.json(curses);
 }
 
 //createController/////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
-export async function createController(req: Request, res: Response): Promise<Response> {
-    const { title, description, user, especialidad, mension, credito, ciclo, codigo, requisito, year } = req.body;
-    const usser = await Curse.findOne({ user: user, codigo: codigo, mension: mension })
+export async function   createController(req: Request, res: Response): Promise<Response> {
+    const { title, description, user, especialidad, mension, credito, ciclo, codigo, requisito, year} = req.body;
+    const usser= await Curse.findOne({user:user, codigo:codigo, mension:mension})
     //console.log(usser);
-    const newCurse = { title, description, user, especialidad, mension, credito, ciclo, codigo, requisito, year, img: "imagen", show: "true" };
-    const Cursew = new Curse(newCurse);
+const newCurse = { title, description, user, especialidad, mension, credito, ciclo, codigo, requisito, year, img: "imagen", show: "true" };
+const Cursew = new Curse(newCurse);
 
-    if (usser) {
-        return res.json({
-            usser: { "msg": "Ya agregó el curso" }
-        });
-    }
+      if(usser){
+      return res.json({
+        usser: { "msg": "Ya agregó el curso" }
+      });
+      }
 
-    if (!usser) {
-        await Cursew.save();
-    }
+      if(!usser){
+      await Cursew.save();
+      }
 
     return res.json({
-        usser: { "msg": "ok" }
+      usser: { "msg": "ok" }
     });
 };
 
@@ -215,24 +195,18 @@ export async function getController(req: Request, res: Response): Promise<Respon
                             pipeline: [
                                 { $match: { $expr: { $eq: ["$unidad", "$$www"] } } },
                                 {
-                                    $lookup: {
-                                        from: "tasks",
-                                        let: { www: "$_id" },
-                                        pipeline: [
-                                            {
-                                                $match: {
-                                                    $expr: {
-                                                        $and: [
-                                                            { $eq: ["$theme", "$$www"] },
-                                                            {
-                                                                $eq: ["$user", user],
-                                                            },
-                                                        ]
-                                                    }
-                                                }
-                                            }
-                                        ],
-                                        as: "usertask",
+                                $lookup: {
+                                    from: "tasks",
+                                    let: { www: "$_id" },
+                                    pipeline: [
+                                         { $match: { $expr: { $and: [
+                                                { $eq: ["$theme", "$$www"] },
+                                                {
+                                                  $eq: ["$user", user],
+                                                },
+                                              ] } } }
+                                    ],
+                                    as: "usertask",
                                     },
                                 }
                             ],
@@ -266,55 +240,54 @@ export async function deleteController(req: Request, res: Response): Promise<Res
 
     const curses = await Curse.findById(id) as ICurse;
     if (curses) {
-        try {
-            await fs.unlink(path.resolve(curses.img));
-        } catch (err) {
-            console.error(err);
-        }
+      try {
+        await fs.unlink(path.resolve(curses.img));
+      } catch (err) {
+        console.error(err);
+      }
     }
 
     await Curse.deleteMany({ _id: id });
     await Integer.deleteMany({ curse: id });
     await Section.deleteMany({ curse: id });
-    const taskss = await Task.find({ curse: id });
-    const themes = await Theme.find({ curse: id });
+    const taskss=await Task.find({ curse: id });
+    const themes=await Theme.find({ curse: id });
     //const units=await Section.find({ curse: id });
     //console.log(taskss)
 
 
-    function deleteFilesTasks(taskss) {
-        for (const file of taskss) {
-            if (file.img) {
-                //console.log(file.img) ;
-                try {
-                    fs.unlink(path.resolve(file.img));
-                } catch (err) {
-                    console.error(err);
-                }
-            }
-        };
+function deleteFilesTasks(taskss){
+  for (const file of taskss) {
+      if(file.img){
+    //console.log(file.img) ;
+    try {
+    fs.unlink(path.resolve(file.img));
+    } catch (err) {
+        console.error(err);
     }
-    await Task.deleteMany({ curse: id });
-    if (taskss) {
-        deleteFilesTasks(taskss);
-    }
+}
+};
+}
+await Task.deleteMany({ curse: id });
+if(taskss){
+  deleteFilesTasks(taskss);
+}
 
-    function deleteFilesThemes(themes) {
-        for (const file of themes) {
-            if (file.img) {
-                //console.log(file.img) ;
-                try {
-                    fs.unlink(path.resolve(file.img));
-                } catch (err) {
-                    console.error(err);
-                }
-            }
-        };
+function deleteFilesThemes(themes){
+  for (const file of themes) {
+      if(file.img){
+    //console.log(file.img) ;
+    try {
+    fs.unlink(path.resolve(file.img));
+    } catch (err) {
+        console.error(err);
     }
-    await Theme.deleteMany({ curse: id });
-    if (themes) {
-        deleteFilesThemes(themes);
-    }
+}};
+}
+await Theme.deleteMany({ curse: id });
+if(themes){
+  deleteFilesThemes(themes);
+}
     return res.json({ message: 'Successfully deleted' });
 };
 
@@ -322,9 +295,9 @@ export async function deleteController(req: Request, res: Response): Promise<Res
 ///////////////////////////////////////////////////////////////////////////
 export async function updateController(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const { title, description, meet, show } = req.body;
+    const { title, description, meet } = req.body;
     const updatedCurse = "";
-    console.log(title, "description", meet, show);
+    console.log(title, description, meet);
 
     if (req.file) {
         const Cursew = await Curse.findById(id) as ICurse;
@@ -337,22 +310,13 @@ export async function updateController(req: Request, res: Response): Promise<Res
         }
         const updatedCurse = await Curse.findByIdAndUpdate(id, { title, description, meet, img: req.file.path });
     } else {
-        const updatedCurse = await Curse.findByIdAndUpdate(id, { title, description, meet, show });
+        const updatedCurse = await Curse.findByIdAndUpdate(id, { title, description, meet });
     }
     return res.json({
         message: 'Successfully updated',
         //updatedCurse
     });
-}
 
-export async function updatecurseHide(req: Request, res: Response): Promise<Response> {
-    const { id } = req.params;
-    const { show } = req.body;
-        const updatedCurse = await Curse.findByIdAndUpdate(id, { show });
-    return res.json({
-        message: 'Successfully updated',
-        //updatedCurse
-    });
 }
 
 

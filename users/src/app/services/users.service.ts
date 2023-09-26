@@ -13,14 +13,10 @@ export class UsersService {
     private http: HttpClient
   ) { }
 
-  updaterestricted_date(ww:string, www:string){
-    return this.http.post<any>(environment.apiURL + '/api/users/Controller/Updaterestricted_date', { ww, www });
-    console.log(ww,www)
-  }
   //obtener usuario con opiniones
   getUser() {
   //console.log(localStorage.getItem('id'))
-    return this.http.get<any>(`${this.URI}/Controller/${localStorage.getItem('id')}`);
+    return this.http.get<any>(`${this.URI}/Controller/633e0130043a66dd23991dbe`);
   }
 
   getUserTeacher(id:string) {
@@ -32,11 +28,8 @@ export class UsersService {
     return this.http.get<any>(`${this.URI}/Controller`);
   }
 
-  get() { 
+  get() {
     return this.http.get<any>(`${this.URI}/ControllerAll/${localStorage.getItem('id')}`);
-  }
-  getteacher() { 
-    return this.http.get<any>(`${this.URI}/ControllerAllteacher`);
   }
 
   registro(name: string, email: string, password: string, photo: File) {

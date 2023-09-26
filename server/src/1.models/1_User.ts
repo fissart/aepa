@@ -3,11 +3,9 @@ import { Schema, model, Document } from 'mongoose'
 const schema = new Schema({
     foto: String,
     rol: String,
-    dateb: String,
-    datee: String,
     celular: String,
     carrera: String,
-    mencion: String,
+    mension: String,
     ciclo: String,
     sexo: String,
     dni: String,
@@ -22,11 +20,9 @@ const schema = new Schema({
 export interface IUser extends Document {
     foto: string;
     rol: string;
-    dateb: string,
-    datee: string,
     celular: string,
     carrera: string,
-    mencion: string,
+    mension: string,
     ciclo: string,
     sexo: string,
     dni: string,
@@ -37,3 +33,44 @@ export interface IUser extends Document {
 }
 
 export default model<IUser>('User', schema);
+/*
+foto: String,
+rol: String,
+password: String,
+name: String,
+dni: String,
+email: String, %dni-añoingreso(last_two)%
+ingreso: String,
+egreso: String,
+matricula: String,
+indiceacdemico: String,
+dscp: String,
+codigo: String,
+nacimiento: String,
+sexo: String,
+celular: String,
+ciclo: String,
+carrera: String,
+sisfoh: String,
+*/
+
+
+/*
+
+//ingreso
+nrecibo
+fecha
+remitente
+descripcion
+monto
+
+//EGRESos
+fecha
+tipodocumento
+nreciboemisor
+nombre
+cantidad
+preciounitario
+concepto
+monto
+*/

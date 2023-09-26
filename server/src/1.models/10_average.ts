@@ -1,7 +1,6 @@
 ﻿import { Schema, model, Document } from 'mongoose'
 const schema = new Schema({
     nota: String,
-    codigo: String,
     teacher: {
         type: Schema.Types.ObjectId,
       },
@@ -14,14 +13,13 @@ const schema = new Schema({
     title: String,
     ciclo: String,
     credito: String,
-    mencion: String,
+    especialidad: String,
     year: String,
 },{//nota, teacher, user, curse, title, ciclo, credito, especialidad
     timestamps: true
 });
 export interface IAverage extends Document {
   nota: string,
-  codigo: String,
   teacher: {
       type: Schema.Types.ObjectId,
     },
@@ -34,7 +32,7 @@ export interface IAverage extends Document {
   title: string,
   ciclo: string,
   credito: string,
-  mencion: string,
+  especialidad: string,
   year: string,
 }
 export default model<IAverage>('Average', schema)

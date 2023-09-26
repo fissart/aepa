@@ -1,0 +1,211 @@
+<div Ngxheadroom   [options]="options" class="fixed-navbar">
+    <app-navigation></app-navigation>
+</div>
+
+<div class="py-5 my-1"></div>
+
+<ng-template #new let-modal>
+    <div class="modal-header h3">
+{{unitytitle}} - {{themetitle}}
+    </div>
+    <div class="modal-body">
+        <ng-katex-html [html]="text"></ng-katex-html>
+        <div *ngIf="textoimg && textoimg.split('.').pop()!=='pdf'">
+          <img [src]="apiURL+'/'+ textoimg" class="m-auto w-100 img-fluid" (error)="onImgError($event)">
+        </div>
+        <div class="bg-light text-center border rounded">
+            {{textoimg}}
+        </div>
+        <ngx-doc-viewer *ngIf="textoimg && textoimg.split('.').pop()=='doc'"
+        [url]="apiURL+'/'+ textoimg"
+        viewer="google"
+        style="width:100%;height:100vh;"
+        ></ngx-doc-viewer>
+
+        <ngx-doc-viewer *ngIf="textoimg && textoimg.split('.').pop()=='docx' || textoimg.split('.').pop()=='pptx'|| textoimg.split('.').pop()=='ptx' || textoimg.split('.').pop()=='xlsx'|| textoimg.split('.').pop()=='xls'"
+        [url]="apiURL+'/'+ textoimg"
+        viewer="google"
+        style="width:100%;height:100vh;"
+        ></ngx-doc-viewer>
+
+        <ngx-extended-pdf-viewer *ngIf="textoimg && textoimg && textoimg.split('.').pop()=='pdf'"
+        [src]="apiURL+'/'+ textoimg"
+        [height]="'800px'"
+        [useBrowserLocale]="false"
+        [textLayer]="true"
+        [showHandToolButton]="false">
+      </ngx-extended-pdf-viewer>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-info" (click)="modal.close('Save click')">Ok</button>
+    </div>
+</ng-template>
+
+
+<div class="container">
+
+
+
+
+<div>
+    <!--<button (click)="generateExcel()"> Generate Excel</button>
+    <button (click)="exportToExcel()" class="btn btn-light">Exportar a Excel</button>
+  -->
+  <div *ngIf="integeraverage.length!=0" class="h5 text-white">
+  {{curse.title}}-{{curse.ciclo}}-Creditos:{{curse.credito}}-{{curse.especialidad}}
+  -- Hasta--{{dtw | date:' dd MMMM yyyy &starf;  hh:mm a' }}
+  </div>
+  <table *ngIf="integeraverage.length!=0" id="season-tble">
+    <tr>
+    </tr>
+      <tr>
+        <th *ngIf="rol==1"></th>
+          <th>N</th>
+        <th>Apellidos y nombres</th>
+        <th>Promedio final</th>
+      </tr>
+    <tr *ngFor="let ww_w of integeraverage index as i">
+      <td *ngIf="rol==1">
+        <button *ngIf="rol==1" class="btn btn-warning shadow-none mt-1" (click)="erraseinteger( ww_w._id)">
+            Retirar del curso
+        </button>
+      </td>
+      <td>{{ i+1 }}
+      </td>
+      <td>{{ ww_w.userw[0].name }}</td>
+      <td *ngIf="rol==1 || rol==2" class="w-15">
+      <span *ngFor="let ww_ of ww_w['userw'] index as i">
+        <input *ngIf="ww_.averagge.length==0" type="text" class="form-control p-1 input-sm"  [disabled]="loading"  [value]=""
+        (blur)="onBlurMean($event, ww_._id, curse.title, curse.ciclo, curse.credito, curse.especialidad)">
+        <span *ngFor="let w of ww_['averagge'] index as i">
+          <input [disabled]="loading" type="text" [ngClass]="[w.nota=='0' ? 'form-control p-1 bg-danger ' : w.nota=='-0' ? 'form-control p-1 bg-success ' : 'form-control p-1 bg-info text-dark']"  [value]="w.nota=='-0'? 'L': w.nota=='0'?'R': w.nota" (blur)="onBlurMeanUpdate($event, w._id)">
+            <button *ngIf="ww_.averagge.length!=0 && rol=='1'" class="btn btn-danger shadow-none p-0 my-1" (click)="delete_average(w._id)">Delete</button>
+        </span>
+      </span>
+
+      </td>
+    </tr>
+  </table>
+
+
+  <!--
+    <table id="season-tble">
+      <tr>
+          <td rowspan="3">1st col</td> <td colspan="5">2nd col</td>
+      </tr>
+      <tr>
+          <td>2nd col</td><td>wwwwwwwwwwwwww</td>
+      </tr>
+      <tr>
+          <td>2nd col</td><td>wwwwwwwww</td>
+      </tr>
+      <tr>
+        <th>N</th>
+        <th>Nombre</th>
+        <th>Promedio</th>
+        <ng-container *ngFor="let www of themes index as i">
+          <th *ngFor="let ww_ of www['themes'] index as i">{{ww_.title.substring(0,3)}}...</th>
+        </ng-container>
+      </tr>
+      <tr *ngFor="let www of photo index as i">
+        <td>{{ i+1 }} </td>
+        <td>{{ www.userw[0].name }}</td>
+        <ng-container *ngFor="let w of www['cursse'] index as i">
+          <ng-container *ngFor="let ww of w['units'] index as i" class="text-info">
+            <ng-container *ngFor="let wwwww of ww['themes'] index as i" class="text-success">
+              <td *ngFor="let ww_ of wwwww['task'] index as i">{{ww_.note}}</td>
+
+        </ng-container>
+        </ng-container>
+        </ng-container>
+        <td *ngIf="rol==1 || rol==2">
+          <input type="number" class="form-control p-1"  [value]="i" (blur)="onBlurMean($event, www.userw[0]._id,  www.cursse[0].title, www.cursse[0].ciclo, www.cursse[0].credito, www.cursse[0].especialidad)">
+          <input type="number" class="form-control p-1"  [value]="i" (blur)="onBlurMean($event, www.userw[0]._id,  www.cursse[0].title)">       </td>
+      </tr>
+    </table>
+  -->
+
+  </div>
+
+
+    <div class="py-2"></div>
+    <div *ngIf="photo" class="row d-flex justify-content-center">
+        <div [ngClass]="[www.userw[0]._id==user ? 'cardnew_ col-md-3 m-3 p-1':'cardnew col-md-3 m-3 p-1']" *ngFor="let www of photo index as i">
+          <div class="text-center ">
+              {{www.userw[0].name}}
+          </div>
+          <div class="d-none text-center text-info">
+            DNI{{www.userw[0].email.substring(8,20)}}
+          </div>
+          <button class="btn shadow-none p-0 my-1" (click)="open1($any(www).userw[0]._id)">
+              <img [src]="apiURL+'/'+www.userw[0].foto" class="img-card-top imgcurse" (error)="onImgError($event)">
+          </button>
+
+          <div class="float text-center ">
+              {{i+1}}
+          </div>
+          <div  *ngFor="let w of www['cursse'] index as i">
+            <!--
+            <div *ngIf="w.units.length>0" class="text-center p-0 rounded transparencia">
+              <div class="row d-flex justify-content-center m-0 p-0">
+                <div *ngFor="let ww of w['units'] index as i" [ngClass]="[ww.note ? ' col-md-6 col-lg-2 col-2 m-1 p-1':'col-md-6 p-1']">
+                  <span  class="h8 text-white d-none">{{i+1}}</span>
+                  <div class="row d-flex justify-content-center m-1 p-0">
+                    <div *ngFor="let wwwww of ww['themes'] index as i" [ngClass]="[wwwww.task.length ? 'col-md-5 rounded bg-info m-1 p-1':'col-md-5 rounded bg-light m-1 p-0']">
+                      <span  class="h9 d-none">{{i+1}}</span>
+                      <button *ngIf="rol==1 && !wwwww.task.length" class="btn btn-success p-0" (click)="savetask(wwwww._id, ww._id, w._id, www.userw[0]._id)">
+                      &#3065;                                        </button>
+                      <div class="row">
+                        <div *ngFor="let ww_ of wwwww['task'] index as i">
+                            <span *ngIf="ww_.archivo" class="text-dark">&starf; {{ww_.archivo.split('.').pop()!}}</span>
+                            <button *ngIf="rol==1" class="btn btn-info m-0 p-0" (click)="deletetask($any(ww_)._id)"> x </button>
+                            {{ww_.note}}
+                            <button class="btn btn-info p-0" (click)="openwww(new, ww_.task, ww_.archivo, ww.title, wwwww.title)">
+                             &#x2766;
+                            </button>
+                            <input *ngIf="rol==1 || rol==2" type="text" class="form-control p-1"  [value]="ww_.note" (blur)="onBlurMethod($event, ww_._id, ww_.task)">
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            -->
+          </div>
+          <button *ngIf="rol==1 || rol==2 " class="btn btn-warning shadow-none mt-1" (click)="erraseinteger($any(www)._id)">
+              Retirar del curso
+          </button>
+        </div>
+    </div>
+
+    <div *ngIf="datastd.length!==0 && rol==1 || rol==2 " class="container py-1 px-0">
+      <div class="justify-content-center align-items-center bg-ligth">
+        <div *ngFor="let doc of datastd index as i">
+          <div [ngClass]="[doc.www.length != 0 ? 'card bg-success  p-1 m-1':'card bg-light p-1 m-1']">
+              <span class="w-75">{{doc.name}}--{{doc.carreramension}}--{{doc.mension}}</span>
+
+            <div>
+              <button *ngIf="doc.www.length == 0" class="btn btn-warning shadow-none rounded-0" (click)="integer(doc._id)">Integrar</button>
+            </div>
+            <div *ngFor="let docwww of doc['www'] index as i">
+              <button class="btn btn-info shadow-none mt-1" (click)="erraseinteger(docwww._id)">
+                  Retirar del curso
+              </button>
+            </div>
+<!--
+            <div *ngFor="let average of doc['averagge'] index as i">
+              <button class="btn btn-danger shadow-none p-0 my-1" (click)="delete_average(average._id)">Delete</button>
+              {{i+1}}-
+              {{average.title}}
+              <span>
+                [{{average.nota=='0'? 'L': average.nota=='-0'? 'R': average.nota=='00'? '':average.nota }}]
+              </span>
+            </div>
+-->
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

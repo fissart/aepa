@@ -1,0 +1,197 @@
+<div Ngxheadroom data-tolerance="5" data-offset="100" data-classes='{"initial":"animated","pinned":"slideDown","unpinned":"slideUp"}' class="fixed-navbar">
+    <app-navigation></app-navigation>
+</div>
+<div class="height"></div>
+
+
+
+<!--modal contenido ww-->
+<ng-template #ww let-modal>
+    <div class="modal-body">
+        <!--<markdown [data]="text" katex [katexOptions]="options"></markdown>-->
+        <ng-katex-html [html]="text"></ng-katex-html>
+
+        <img *ngIf="file && file.split('.').pop()=='png'||file.split('.').pop()=='jpg'||file.split('.').pop()=='jpeg'||file.split('.').pop()=='svg'||file.split('.').pop()=='webp'" [src]="apiUrl+'/'+ file" class="img-fluid w-100" (error)="onImgError($event)">
+
+        <div *ngIf="file" class="border rounded  text-center d-none">{{file}}</div>
+
+        <ngx-doc-viewer *ngIf="file.split('.').pop()=='doc'"
+        [url]="apiUrl+'/'+ file"
+        viewer="google"
+        style="width:100%;height:100vh;"
+        ></ngx-doc-viewer>
+
+        <ngx-doc-viewer *ngIf="file && file.split('.').pop()=='docx' || file.split('.').pop()=='pptx'|| file.split('.').pop()=='ptx' || file.split('.').pop()=='xlsx'|| file.split('.').pop()=='xls'"
+        [url]="apiUrl+'/'+ file"
+        viewer="google"
+        style="width:100%;height:800px;"
+        ></ngx-doc-viewer>
+        <ngx-extended-pdf-viewer    *ngIf="file && file.split('.').pop()=='pdf'"
+         [src]="apiUrl+'/'+ file"
+         [height]="'500px'"
+         ></ngx-extended-pdf-viewer>
+
+    </div>
+    <div class="modal-footer py-1 px-1">
+        <button class="btn btn-info shadow-none" (click)="modal.close()">Close</button>
+    </div>
+</ng-template>
+
+
+<form *ngIf="!theme" class="container p-3" (submit)="updatetheme(title, description, task, time)">
+    <div class="row p-0">
+
+        <div class="form-group mb-3">
+            <label for="exampleFormControlInput1" class="form-label text-info">Titulo</label>
+            <input type="text" class="form-control" placeholder="Photo's Title" #title [value]="photo.title">
+        </div>
+
+        <div class="form-group mb-3 ">
+            <label for="exampleFormControlInput1" class="form-label text-info">Sesión</label>
+            <div class="row mx-1">
+                <div class="col-md-12 p-0 bg-white p-1">
+                  <quill-editor
+                    [ngModelOptions]="{standalone:true}"
+                    [(ngModel)]="markdown"
+                    placeholder="Enter Text"
+                    (onContentChanged)="onContentChanged($event)"
+                  ></quill-editor>
+                    <textarea rows="50" cols="0" class="variable-textarea form-control d-none" [(ngModel)]="markdown" [ngModelOptions]="{standalone:true}" [value]="$any(photo).description" #description></textarea>
+                </div>
+                <div class="form-group p-1 col-md-7">
+                  <ng-katex-html class="d-none" [html]="markdown"></ng-katex-html>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group mb-3">
+
+            <label for="exampleFormControlInput1" class="form-label">Tarea</label>
+            <div class="row mx-1">
+                <div class="col-md-5 p-0">
+                    <textarea rows="5" class="variable-textarea form-control" [(ngModel)]="markdown2" [ngModelOptions]="{standalone:true}" #task [value]="photo.task"></textarea>
+                </div>
+                <div class="col-md-7 rounded ">
+                  <ng-katex-html [html]="markdown2"></ng-katex-html>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="exampleFormControlInput1" class="form-label ">Fecha de entrega</label>
+            <input type="datetime-local" class="form-control" #time [value] ="photo.time | date:'yyyy-MM-ddThh:mm'">
+        </div>
+
+      </div>
+    <label for="exampleFormControlInput1" class="form-label ">Diapositiva</label>
+    <div *ngIf="!photoSelected" class="text-center">
+    <input type="file" class="d-none" (change)="capturandoFile($event)" #photoInput>
+    <img [src]="photoSelected || apiUrl+'/'+ $any(photo).img" class="m-auto w-25 cursorpoint img-fluid" (error)="onImgError($event)" alt="No image" (click)="photoInput.click()">
+    </div>
+    <div *ngIf="!photoSelected && photo.img" class="bg-light text-center border rounded">
+        {{photo.img}}
+    </div>
+    <div *ngIf="photoSelected" class="bg-light text-center border rounded">
+        {{name}}
+    </div>
+    <ngx-extended-pdf-viewer *ngIf="photoSelected && type=='application/pdf'"
+    [src]="photoSelected"
+    [height]="'1000px'"
+    [useBrowserLocale]="false"
+    [textLayer]="true"
+    [showHandToolButton]="true">
+</ngx-extended-pdf-viewer>
+
+    <ngx-extended-pdf-viewer *ngIf="!photoSelected && photo.img && photo.img.split('.').pop()=='pdf'"
+    [src]="apiUrl+'/'+ photo.img"
+    [height]="'800px'"
+    [useBrowserLocale]="false"
+    [textLayer]="true"
+    [showHandToolButton]="false">
+</ngx-extended-pdf-viewer>
+
+<mat-progress-bar *ngIf="value > 0" color="accent" mode="determinate" [value]="value"></mat-progress-bar>
+
+<button class="btn btn-info mt-1" [disabled]="loading">{{ loading=='false' ? 'Cargando '+value+'%':
+'Actualizar'}}</button>
+
+    <button class="btn btn-info shadow-none d-none">Update</button>
+</form>
+
+<div *ngIf="value > 0" class="fixed-bottom text-warning">
+{{ loading=='false' ? 'Cargando '+value+'%': ''}}
+<mat-progress-bar class="fixed-bottom" color="accent" mode="determinate" [value]="value">
+</mat-progress-bar>
+</div>
+
+<div class="container p-3" *ngIf="theme">
+<h5 class="">{{photo.title}}</h5>
+<table  *ngIf="photo.integgers && photo.integgers.length!=0" id="season-tble">
+    <tr>
+      <th>N</th>
+      <th>Apellidos y nombres</th>
+
+      <th>Calificación</th>
+      <th>Asistencia</th>
+      <th>Fecha</th>
+    </tr>
+  <tr *ngFor="let ww_w of photo.integgers index as i">
+      <td>{{ i+1 }}
+      </td>
+      <td>{{ ww_w.Usser[0].name }}</td>
+
+      <td class="w-15">
+        <span *ngFor="let ww_ of ww_w['Usser'] index as i">
+          <span *ngIf="ww_.tassk.length==0" class="d-flex">
+            <button class='btn btn-info shadow-none' (click)="linkk.click()">Archivo</button>
+            <input type="file" class="d-none" (change)="createtaskimg($event, photo._id, photo.unidad, photo.curse, ww_w.Usser[0]._id)" #linkk>
+            <input type="text" class="form-control p-1 mx-1"  [disabled]="loading"  [value]=""
+            (blur)="savetask($event, photo._id, photo.unidad, photo.curse, ww_w.Usser[0]._id )">
+          </span>
+
+
+          <span *ngFor="let w of ww_['tassk'] index as i" class="d-flex">
+            <span class="btn-group">
+              <button class='btn btn-info shadow-none' (click)="link.click()">Archivo</button>
+              <button   class='btn btn-danger shadow-none' (click)="errasetask(w._id)">Borrar</button>
+              <button  [ngClass]="[w.img ? 'btn btn-success shadow-none':'btn btn-primary shadow-none']"
+              (click)="open1(ww, w.task, w.img?w.img:'Sin archivo')">Tarea</button>
+            </span>
+            <input type="file" class="d-none" (change)="updatetasskimg($event, w._id, w.task, w.note, w.asistence)" #link>
+            <input [disabled]="loading" class="form-control mx-1" type="text" [ngClass]="[w.nota=='0' ? 'form-control p-1 bg-danger  border-0':'form-control p-1 bg-info border-0']"  [value]="w.note"
+            (blur)="updateTask($event, w._id, w.task, w.asistence)"
+            >
+          </span>
+        </span>
+      </td>
+      <td>
+        <span class="d-flex" *ngFor="let ww_ of ww_w['Usser'] index as i">
+          <span class="btn-group" *ngIf="ww_.tassk.length==0">
+            <button class='btn btn-light'  [disabled]="loading" (click)="saveasistant(photo._id, photo.unidad, photo.curse, ww_w.Usser[0]._id, 'P')">P</button>
+            <button class='btn btn-light'  [disabled]="loading" (click)="saveasistant(photo._id, photo.unidad, photo.curse, ww_w.Usser[0]._id, 'T')">T</button>
+            <button class='btn btn-light'  [disabled]="loading" (click)="saveasistant(photo._id, photo.unidad, photo.curse, ww_w.Usser[0]._id, 'F')">F</button>
+            <button class="btn btn-light"  [disabled]="loading" (click)="saveasistant(photo._id, photo.unidad, photo.curse, ww_w.Usser[0]._id, 'J')">J</button>
+          </span>
+          <ng-container style='margin-left:1em' *ngFor="let w of ww_['tassk'] index as i" class="d-flex">
+            <span class="btn-group" *ngIf="w.length!=0">
+              <button class='btn btn-light border'  [disabled]="loading" (click)="updateasistant(w._id, w.task, w.note, 'P')">P</button>
+              <button class='btn btn-light border'  [disabled]="loading" (click)="updateasistant(w._id, w.task, w.note, 'T')">T</button>
+              <button class='btn btn-light border'  [disabled]="loading" (click)="updateasistant(w._id, w.task, w.note, 'F')">F</button>
+              <button class="btn btn-light border"  [disabled]="loading" (click)="updateasistant(w._id, w.task, w.note, 'J')">J</button>
+            </span>
+              <div class="p-2 px-3 mx-2 rounded " [ngClass]="[w.asistence=='P' ? 'bg-success':w.asistence=='F'?'bg-danger':w.asistence=='T'?'bg-warning':'bg-info']" >{{w.asistence}}</div>
+          </ng-container>
+        </span>
+      </td>
+      <td>
+         <span *ngFor="let ww_ of ww_w['Usser'] index as i">
+          <span *ngFor="let w of ww_['tassk'] index as i" class="d-flex">
+            <span *ngIf='w.createdAt'>{{w.createdAt | date:'hh:mm dd/MM/YY'}}</span>
+            <span *ngIf='w.updatedAt && !w.createdAt'>{{w.updatedAt | date:'hh:mm dd/MM/YY'}}</span>
+          </span>
+        </span>
+    </td>
+  </tr>
+</table>
+</div>

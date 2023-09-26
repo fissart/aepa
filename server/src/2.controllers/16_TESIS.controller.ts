@@ -5,9 +5,9 @@ import Collection, { ICollection } from '../1.models/7_Collection';
 import Book, { IBook } from '../1.models/9_Book';
 //createController///////////////////////////////////////////////////////////////////////
 export async function createController(req: Request, res: Response): Promise<Response> {
-    const { title, description, user } = req.body;
+    const { title, description, user, subtype } = req.body;
     //console.log(req.body);
-    const newDate = { title, description, user, author:"Autor", subtype:"TESIS", type: 'TESIS'};
+    const newDate = { title, description, user, author:"Autor", subtype, type: 'TESIS'};
     const data = new Book(newDate);
     await data.save();
     return res.json({ message: 'Ok create' });

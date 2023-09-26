@@ -1,0 +1,71 @@
+<nav class="nav navbar smart-scroll navbar-expand-lg">
+    <div class="container-fluid">
+        <ng-container *ngIf="!authService.loggedIn(); else loggedInw">
+            <a class="navbar-brand my-3 text-light" routerLink="/">
+                <div class="d-flex">
+                    <div class="px-3">
+                        <img class="wrapperest12 text-warning" src="/assets/logo.svg" alt="image">
+                    </div>
+                </div>
+            </a>
+        </ng-container>
+        <ng-container>
+            <a *ngIf="!isCollapsed" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation"
+                class="navbar-brand p-0 text-light b-info " routerLink="/">
+                AEPA
+            </a>
+        </ng-container>
+        <ng-template #loggedInw>
+
+            <a *ngIf="photo" class="navbar-brand p-0" routerLink="/user/{{photo._id}}">
+                <img *ngIf="isCollapsed" [src]="apiUrl+'/'+ photo.foto" (error)="onImgError($event)"
+                    class="wrapperest10">
+            </a>
+
+        </ng-template>
+        <button class="navbar-toggler btn shadow-none" type="button" data-toggle="collapse"
+            data-target="#navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation"
+            (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
+            aria-controls="navbarTogglerDemo02">
+            <mat-icon color='white' svgIcon="www" aria-hidden="false"></mat-icon>
+        </button>
+
+        <div class="collapse navbar-collapse  justify-content-end" id="navbarTogglerDemo02" [ngbCollapse]="isCollapsed">
+
+            <ul class="navbar-nav ml-auto">
+
+
+                <li class="nav-item">
+                    <a class="nav-link font-bold" href="/">INICIO</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link font-bold" href="/Cmpt14MVComponent">BIOGRAFÍA</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link font-bold" href="/projects">PROYECTOS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link font-bold" href="/expositions">EXPOS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link font-bold" href="/texts">TEXTOS</a>
+                </li>
+                <ng-container *ngIf="!authService.loggedIn(); else loggedIn">
+                    <li class="nav-item">
+                        <a class="nav-link font-bold" routerLink="/login">LOGIN</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link font-bold" routerLink="/registro">REGISTER</a>
+                    </li>
+                </ng-container>
+                <ng-template #loggedIn>
+
+                    <li class="nav-item">
+                        <a class="nav-link" style="cursor: pointer;" (click)="authService.logout()">CERRAR</a>
+                    </li>
+                </ng-template>
+
+            </ul>
+        </div>
+    </div>
+</nav>

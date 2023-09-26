@@ -12,7 +12,7 @@ import {
     getsController,
     getsControllerUser,
     getcursesources,
-    updatecurseHide//updateController2
+    //updateController2
     //createOpinion,
     //delete_Opinion,
 } from '../2.controllers/2_curses.controller'
@@ -28,13 +28,10 @@ router.route('/Controller/:id')
     .delete(deleteController)
     .put(upload.single('image'), updateController);
 
-router.route('/Controller/updatecursehide/:id')
-    .put(updatecurseHide);
-
 router.route('/getsControllerUser/:id')
     .get(getsControllerUser)
 
-router.route('/ControllerCurseTeacher/:id/:curseshow')
+router.route('/ControllerCurseTeacher/:id')
     .get(getsController);
 
 router.route('/getcursesources')

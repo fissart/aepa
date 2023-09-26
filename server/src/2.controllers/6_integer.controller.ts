@@ -31,7 +31,7 @@ export async function getupdateController(req: Request, res: Response): Promise<
 export async function createController(req: Request, res: Response): Promise<Response> {
 
     var mongoose = require('mongoose');
-    const { curse, user, userteach, codigo} = req.body;
+    const { curse, user, userteach } = req.body;
 
     if(mongoose.Types.ObjectId.isValid(curse)){
 
@@ -43,16 +43,16 @@ export async function createController(req: Request, res: Response): Promise<Res
     //console.log(www, wwwww);
     //const integer = await Curse.find({curse:id_curse,user:id_user});
         if(wwwww && www){
-            const integer = await Curse.find({codigo:codigo, user:id_user});
+            const integer = await Curse.find({curse:id_curse,user:id_user});
             //console.log(integer)
             if(integer.length == 0){
             const userteachwww=www.user;
-            const newCurse = { curse, user, userteach :userteachwww, codigo, show: "true" };
+            const newCurse = { curse, user, userteach :userteachwww, show: "true" };
             const Cursew = new Curse(newCurse);
             await Cursew.save();
                }else{
                  return res.json({
-                msg: 'Algún docente más registró a este estudiante en este curso comunquese si aún no tiene calificación alguna.',
+                msg: 'Ya se registró en el curso',
             });
                }
         }else{
@@ -76,14 +76,12 @@ export async function createController(req: Request, res: Response): Promise<Res
 
 export async function getintegerController(req: Request, res: Response): Promise<Response> {
     const { ObjectId } = require("mongodb");
-    const curso = req.params.id;
-console.log(curso);
-
-    //const curso = ObjectId(id);
+    const id = ObjectId(req.params.id);
+    const curso = ObjectId(id);
     const integers = await Curse.aggregate([
         {
             $match: {
-                codigo: curso,
+                curse: curso,
             },
         },
         {
@@ -97,7 +95,8 @@ console.log(curso);
                             from: "averages",
                             let: { wwwww: "$_id" },
                             pipeline: [
-                                 {$match: { $expr: { $and: [{ $eq: ["$user", "$$www"] }, { $eq: ["$codigo",  curso] },] } }},
+                                {$match: { $expr: { $and: [{ $eq: ["$user", "$$www"] }, { $eq: ["$curse",  curso] },] } }},
+
                             ],
                             as: "averagge",
                         },
@@ -107,16 +106,6 @@ console.log(curso);
             },
         },
         {'$sort': {  'userw.name': 1 }},
-        {
-            $lookup: {
-                from: "users",
-                let: { www: "$userteach" },
-                pipeline: [
-                    { $match: { $expr: { $eq: ["$_id", "$$www"] } } },
-                ],
-                as: "userwwteach",
-            },
-        },
     ]);
   //  console.log(integers);
     return res.json(integers);
@@ -214,99 +203,6 @@ export async function getController(req: Request, res: Response): Promise<Respon
         */
     ]);
   //  console.log(integers);
-    return res.json(integers);
-}
-
-   
-//getControllerNotes/////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////
-export async function getControllerNotes(req: Request, res: Response): Promise<Response> {
-    const { ObjectId } = require("mongodb");
-    const id = ObjectId(req.params.id);
-    const curso = ObjectId(id);
-    //    const { id } = req.params;
-//          const Curseuser = await Curse.find({curse:curso});
-    const integers = await Curse.aggregate([
-        {
-            $match: {
-                curse: curso,
-            },
-        },
-        {
-            $lookup: {
-                from: "users",
-                let: { www: "$user" },
-                pipeline: [
-                    { $match: { $expr: { $eq: ["$_id", "$$www"] } } },
-                    {
-                        $lookup: {
-                            from: "tasks",
-                            let: { www: "$_id" },
-                            pipeline: [
-                                { $match: { $expr: { $eq: ["$user", "$$www"] } } },
-                                { $match: { $expr: {$and: [
-                                    { $eq: ["$user", "$$www"] },
-                                    {
-                                      $eq: ["$curse", curso ],
-                                    },
-                                  ],} } }
-
-                            ],
-                            as: "tasks",
-                        },
-                    },
-                ],
-                as: "userw",
-            },
-        },
-        {'$sort': {  'userw.name': 1 }},
-        {
-            $lookup: {
-                from: "curses",
-                let: { wwwww: "$curse",  www_: "$user" },
-                pipeline: [
-                    { $match: { $expr: { $eq: ["$_id", "$$wwwww"] } } },
-                    {
-                        $lookup: {
-                            from: "sections",
-                            let: { www: "$codigo" },//_id
-                            pipeline: [
-                                { $match: { $expr: { $eq: ["$codecurse", "$$www"] } } },//curse
-                                {
-                                    $lookup: {
-                                        from: "themes",
-                                        let: { www: "$_id" },
-                                        pipeline: [
-                                            { $match: { $expr: { $eq: ["$unidad", "$$www"] } } },
-                                            {
-                                                $lookup: {
-                                                    from: "tasks",
-                                                    let: { www: "$_id" },
-                                                    pipeline: [
-                                                      { $match: { $expr: { $and: [
-                                                             { $eq: ["$theme", "$$www"] },
-                                                             {
-                                                               $eq: ["$user", "$$www_"],
-                                                             },
-                                                           ] } } }
-                                          ],
-                                                    as: "task",
-                                                },
-                                            },
-
-                                        ],
-                                        as: "themes",
-                                    },
-                                },
-                            ],
-                            as: "units",
-                        },
-                    },
-                ],
-                as: "cursse",
-            },
-        },
-    ]);
     return res.json(integers);
 }
 

@@ -1,0 +1,283 @@
+<div Ngxheadroom [options]="options" class="fixed-navbar">
+  <app-navigation></app-navigation>
+</div>
+<div class="height"></div>
+
+<!--modal contenido ww-->
+<ng-template #ww let-modal>
+  <div class="modal-body">
+    <!--<markdown [data]="text" katex [katexOptions]="options"></markdown>-->
+    <ng-katex-html [html]="text"></ng-katex-html>
+
+    <img
+      *ngIf="file && file.split('.').pop()=='png'||file.split('.').pop()=='jpg'||file.split('.').pop()=='jpeg'||file.split('.').pop()=='svg'||file.split('.').pop()=='webp'"
+      [src]="apiUrl+'/'+ file" class="img-fluid w-100" (error)="onImgError($event)">
+
+    <div *ngIf="file" class="border rounded  text-center d-none">{{file}}</div>
+
+    <ngx-doc-viewer *ngIf="file.split('.').pop()=='doc'" [url]="apiUrl+'/'+ file" viewer="google"
+      style="width:100%;height:100vh;"></ngx-doc-viewer>
+
+    <ngx-doc-viewer
+      *ngIf="file && file.split('.').pop()=='docx' || file.split('.').pop()=='pptx'|| file.split('.').pop()=='ptx' || file.split('.').pop()=='xlsx'|| file.split('.').pop()=='xls'"
+      [url]="apiUrl+'/'+ file" viewer="google" style="width:100%;height:800px;"></ngx-doc-viewer>
+    <ngx-extended-pdf-viewer *ngIf="file && file.split('.').pop()=='pdf'" [src]="apiUrl+'/'+ file"
+      [height]="'500px'"></ngx-extended-pdf-viewer>
+
+  </div>
+  <div class="modal-footer py-1 px-1">
+    <button class="btn btn-info shadow-none" (click)="modal.close()">Close</button>
+  </div>
+</ng-template>
+
+<!--modal item and subitem www-->
+<ng-template #www let-modal>
+  <div class="modal-header bg-succes text-center">
+    {{text}}
+  </div>
+  <div class="modal-body" *ngIf="text">
+    <img
+      *ngIf="text.split('.').pop()=='png'||text.split('.').pop()=='jpg'||text.split('.').pop()=='jpeg'||text.split('.').pop()=='svg'"
+      [src]="apiUrl+'/'+ text" class="img-fluid w-100" (error)="onImgError($event)">
+
+    <ngx-doc-viewer *ngIf="text && text.split('.').pop()=='doc'" [url]="apiUrl+'/'+ text" viewer="google"
+      style="width:100%;height:100vh;"></ngx-doc-viewer>
+    <ngx-doc-viewer
+      *ngIf="text && text.split('.').pop()=='docx' || text.split('.').pop()=='pptx'|| text.split('.').pop()=='ptx' || text.split('.').pop()=='xlsx'|| text.split('.').pop()=='xls'"
+      [url]="apiUrl+'/'+ text" viewer="google" style="width:100%;height:100vh;"></ngx-doc-viewer>
+    <ngx-extended-pdf-viewer *ngIf="text && text.split('.').pop()=='pdf'" [src]="apiUrl+'/'+ text"
+      [height]="'500px'"></ngx-extended-pdf-viewer>
+  </div>
+  <div class="modal-footer bg-succes">
+
+    <button class="btn card-photo shadow-none" (click)="modal.close()">Close</button>
+  </div>
+
+</ng-template>
+
+
+
+<div class="container mt-1">
+  <div class="row" *ngIf="!$any(photo); else main_content">
+    <h1>Loading...</h1>
+  </div>
+
+  <ng-template #main_content>
+
+    <div *ngIf="photo.title" class="card border p-0 justify-content-center align-items-center">
+      <div class="border" style="background-color:rgba(100,100,100,0.5);  
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: .5em;
+      width: 95%;
+      z-index: 1;
+      padding: .5em;
+      color: white">
+        <div class=" h5">
+          {{photo.title}}-{{photo.mension}}-{{photo.ciclo}}
+        </div>
+        <div class="">
+          Credito: {{photo.credito}}
+        </div>
+
+        <span *ngIf="photouser.rol==1 || photouser.rol==2" class="text-warning">Código del curso: {{photo._id}}</span>
+        <div *ngIf="show!='ok'" class="d-flex flex-row-reverse bg-highlight">
+          <a class="btn btn-info text-white" href="https://meet.google.com/{{photo.meet}}"
+            style='backgroundColor:indigo' target='_blanck'>Unirse al Meet</a>
+        </div>
+        <div class="d-flex justify-content-center bg-highlight">
+          <div class="btn-group mt-2 w-100" role="group" aria-label="Basic example">
+            <button class="btn btn-info" (click)="open1(ww, $any(photo).description,$any(photo).img)">
+              <mat-icon svgIcon="expand" aria-hidden="false" aria-label="Example thumbs up SVG icon"></mat-icon>
+            </button>
+            <button *ngIf="photouser.rol==1 || photouser.rol==2 && show!='ok'" class="btn btn-light shadow-none"
+              (click)="CreateSection(photo.user, photo._id, photo.codigo)">
+              <mat-icon svgIcon="file" aria-hidden="false" aria-label="Example thumbs up SVG icon"></mat-icon>
+            </button>
+            <button class="btn btn-warning shadow-none" (click)="std(photo._id)">
+              <mat-icon svgIcon="student" aria-hidden="false" aria-label="Example thumbs up SVG icon"></mat-icon>
+            </button>
+            <button *ngIf="photouser.rol==1 || photouser.rol==2 && show!='ok'" class="btn btn-info shadow-none"
+              (click)="selectedCard(photo._id)">
+              <mat-icon svgIcon="edit" aria-hidden="false" aria-label="Example thumbs up SVG icon"></mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <img *ngIf="photo.img" [src]="apiUrl+'/'+ $any(photo).img" class="imgcurse" (error)="onImgError($event)"
+        alt="No image">
+    </div>
+
+
+    <!--Unidades-->
+    <div class="row m-0 justify-content-center" *ngIf="show!='ok'">
+      <div class="col-md-6 p-3" *ngFor="let photo of photo.unidades index as i">
+        <div class="border rounded justify-content-center align-items-center p-2">
+          <div class="">
+            <a class="btn rounded-0 btn-info text-uppercase w-100"
+              (click)="open1(ww, $any(photo).description, $any(photo)._id)">
+              Unidad {{i+1}}: {{photo.title}}
+            </a>
+            <div class='border-0 p-0 btn-group d-flex' *ngIf="photouser.rol==1 || photouser.rol==2">
+              <button class="btn rounded-0 btn-warning shadow-none" (click)="savetheme(photo._id)">
+                <mat-icon svgIcon="file" aria-hidden="flase" aria-label="Example thumbs up SVG icon"></mat-icon>
+              </button>
+              <button class="btn rounded-0 btn-success shadow-none" (click)="editunity(photo._id)">
+                <mat-icon svgIcon="edit" aria-hidden="false" aria-label="Example thumbs up SVG icon"></mat-icon>
+              </button>
+              <button class="btn rounded-0 btn-danger shadow-none"
+                (click)="errasesection(photo._id, photo.temas.length)">
+                <mat-icon svgIcon="remove" aria-hidden="false" aria-label="Example thumbs up SVG icon"></mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <div class="row justify-content-center p-2 align-items-center">
+            <div class="col-md-6 p-2" *ngFor="let subItem of photo['temas'] index as i">
+              <div
+                [ngClass]="[subItem.usertask.length==0 ? 'cardnew bg-light border p-1 align-items-center':'cardnew_ p-1 align-items-center border']">
+                <div class="h6 w-100">
+                  <a [ngClass]="[subItem.usertask.length==0 ? 'btn btn-success w-100 shadow-none':'btn btn-info w-100 shadow-none border-0']"
+                    (click)="open1(ww, $any(subItem).description, $any(subItem).img)">
+                    S{{i+1}}: {{subItem.title}}
+                  </a>
+                </div>
+                <div class='border-0 p-0 btn-group d-flex'>
+                  <button *ngIf="photouser.rol==1 || photouser.rol==2" class="btn btn-info shadow-none"
+                    (click)="edittheme(subItem._id)">
+                    <mat-icon svgIcon="edit" aria-hidden="false" aria-label="Example thumbs up SVG icon"></mat-icon>
+                  </button>
+                  <button *ngIf="photouser.rol==1 || photouser.rol==2" class="btn btn-danger shadow-none"
+                    (click)="errase(subItem._id,subItem.usertask.length)">
+                    <mat-icon svgIcon="remove" aria-hidden="false" aria-label="Example thumbs up SVG icon"></mat-icon>
+                  </button>
+                </div>
+
+                <button *ngIf="photouser.rol==1 || photouser.rol==2" class="btn btn-warning shadow-none mt-1"
+                  (click)="themecalificacion(subItem._id, 'theme')">Revisar tareas</button>
+
+                <div class='border-0 p-0 btn-group d-flex  my-1'>
+                  <button
+                    [ngClass]="[subItem.usertask.length==0 ? 'btn btn-primary shadow-none':'btn btn-secondary shadow-none border-0']"
+                    (click)="open1(ww, $any(subItem).task, $any(subItem)._id)">Tarea</button>
+                </div>
+
+                <button *ngIf="subItem.usertask.length==0 && subItem.time>DateNow && photouser.rol==3"
+                  class="btn btn-info card-photo border shadow-none mb-1"
+                  (click)="selectheme(subItem._id, photo._id)">Enviar tarea</button>
+                <div *ngIf="photouser.rol==3" class="card bg-info border d-none">
+                  {{subItem.time}}--{{subItem.usertask.length}}</div>
+                <button *ngIf="subItem.usertask.length!==0&& photouser.rol==3"
+                  [ngClass]="[subItem.usertask[0].img ? 'btn btn-success card-photo mb-1':'btn btn-light card-photo mb-1']"
+                  (click)="open1(ww, subItem.usertask[0].task, subItem.usertask[0].img?subItem.usertask[0].img:'Sin archivo')">Registro-{{subItem.usertask[0].asistence}}
+                  <span class="text-warning" *ngFor="let www of subItem['usertask'] index as i">
+                    {{www.length!=0?www.note:null}}
+                  </span>
+                </button>
+                <button *ngIf="subItem.usertask.length==1 && subItem.time>DateNow "
+                  class="btn card-photo btn-outline-danger details-none d-none border-0"
+                  (click)="deletetask(subItem.usertask[0]._id)">Eliminar tarea</button>
+                <button *ngIf="subItem.usertask.length==1  && subItem.time>DateNow "
+                  class="btn btn-info card-photo mb-1 shadow-none border-0"
+                  (click)="updatetask(subItem.usertask[0]._id)">Actualizar tarea</button>
+                <p *ngIf="subItem.time<DateNow"
+                  class="margin-0 text-center text-danger border border-warning m-0 p-1 card">Venció la fecha de entrega
+                  el {{subItem.time | date:'dd MMMM yyyy; hh:mm a' }}</p>
+                <p *ngIf="subItem.time>DateNow" class="margin-0 border border-primary p-1 text-center m-0 card">Tarea
+                  hasta {{subItem.time | date:'dd MMMM yyyy; hh:mm a' }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="photo.archivos && photo.archivos.length > 0 &&  show!='ok'" class="bg-light p-2 mb-3">
+      <div class="container h3 text-center rounded">
+        ARCHIVOS DEL CURSO
+      </div>
+      <ng-katex-html class="bg-light d-none" *ngIf="photo.description" [html]="photo.description"></ng-katex-html>
+      <div class="" *ngFor="let subItem of photo.archivos index as i">
+        <button class="btn  btn-outline-success my-1 card-photo shadow-none"
+          (click)="open2(www, subItem.img)">{{subItem.title}}</button>
+      </div>
+      
+    </div>
+
+    <div *ngIf="photouserteacher.filosophy &&  show!='ok'" class="p-2 my-3">
+      <div class="container h3 text-center">
+        CARPETA DOCENTE
+      </div>
+      <ng-katex-html *ngIf="photouserteacher.filosophy" [html]="photouserteacher.filosophy"></ng-katex-html>
+
+      <div *ngIf="photouserteacher.archivos&&photouserteacher.archivos.length > 0"
+        class="justify-content-center align-items-center">
+        <h5 class='p-1 my-2'>
+          SILABOS
+        </h5>
+        <div class="" *ngFor="let subItem of photouserteacher.archivos index as i">
+          <button *ngIf="subItem.type=='silabo'" class="btn btn-outline-info my-1 card-photo shadow-none"
+            (click)="open2(www, subItem.img)">{{subItem.title}}</button>
+        </div>
+
+        <h5 class='p-1 my-2'>
+          RESUMEN CIENTÍFICO
+        </h5>
+        <div class="" *ngFor="let subItem of photouserteacher.archivos index as i">
+          <button *ngIf="subItem.type=='resumen'" class="btn  btn-outline-info my-1 card-photo shadow-none"
+            (click)="open2(www, subItem.img)">{{subItem.title}}</button>
+        </div>
+
+        <h5 class='p-1 my-2'>
+          MATERIALES EDUCATIVOS
+        </h5>
+        <div class="" *ngFor="let subItem of photouserteacher.archivos index as i">
+          <button *ngIf="subItem.type=='material'" class="btn  btn-outline-info my-1 card-photo shadow-none"
+            (click)="open2(www, subItem.img)">{{subItem.title}}</button>
+        </div>
+
+        <h5 class='p-1 my-2'>
+          REGISTROS
+        </h5>
+        <div class="" *ngFor="let subItem of photouserteacher.archivos index as i">
+          <button *ngIf="subItem.type=='registro'" class="btn  btn-outline-info my-1 card-photo shadow-none"
+            (click)="open2(www, subItem.img)">{{subItem.title}}</button>
+        </div>
+
+        <h5 class='p-1 my-2'>
+          HORARIO
+        </h5>
+        <div class="" *ngFor="let subItem of photouserteacher.archivos index as i">
+          <button *ngIf="subItem.type=='horario'" class="btn  btn-outline-info my-1 card-photo shadow-none"
+            (click)="open2(www, subItem.img)">{{subItem.title}}</button>
+        </div>
+
+        <h5 class='p-1 my-2'>
+          OCURRENCIAS
+        </h5>
+        <div class="" *ngFor="let subItem of photouserteacher.archivos index as i">
+          <button *ngIf="subItem.type=='ocurrencia'" class="btn  btn-outline-info my-1 card-photo shadow-none"
+            (click)="open2(www, subItem.img)">{{subItem.title}}</button>
+        </div>
+        <h5 class='p-1 my-2'>
+          PLAN ANUAL
+        </h5>
+        <div class="" *ngFor="let subItem of photouserteacher.archivos index as i">
+          <button *ngIf="subItem.type=='plan'" class="btn  btn-outline-info my-1 card-photo shadow-none"
+            (click)="open2(www, subItem.img)">{{subItem.title}}</button>
+        </div>
+        <h5 class='p-1 my-2'>
+          PROYECTO INNOVADOR
+        </h5>
+        <div class="" *ngFor="let subItem of photouserteacher.archivos index as i">
+          <button *ngIf="subItem.type=='proyecto'" class="btn  btn-outline-info my-1 card-photo shadow-none"
+            (click)="open2(www, subItem.img)">{{subItem.title}}</button>
+        </div>
+
+      </div>
+    </div>
+
+  </ng-template>
+</div>

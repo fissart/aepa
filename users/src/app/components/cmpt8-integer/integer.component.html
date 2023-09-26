@@ -1,0 +1,147 @@
+<div Ngxheadroom [options]="options" class="fixed-navbar">
+  <app-navigation></app-navigation>
+</div>
+
+<div class="py-5 my-1"></div>
+
+<ng-template #new let-modal>
+  <div class="modal-header h3">
+    {{unitytitle}} - {{themetitle}}
+  </div>
+  <div class="modal-body">
+    <ng-katex-html [html]="text"></ng-katex-html>
+    <div *ngIf="textoimg && textoimg.split('.').pop()!=='pdf'">
+      <img [src]="apiURL+'/'+ textoimg" class="m-auto w-100 img-fluid" (error)="onImgError($event)">
+    </div>
+    <div class="bg-light text-center border rounded">
+      {{textoimg}}
+    </div>
+    <ngx-doc-viewer *ngIf="textoimg && textoimg.split('.').pop()=='doc'" [url]="apiURL+'/'+ textoimg" viewer="google"
+      style="width:100%;height:100vh;"></ngx-doc-viewer>
+
+    <ngx-doc-viewer
+      *ngIf="textoimg && textoimg.split('.').pop()=='docx' || textoimg.split('.').pop()=='pptx'|| textoimg.split('.').pop()=='ptx' || textoimg.split('.').pop()=='xlsx'|| textoimg.split('.').pop()=='xls'"
+      [url]="apiURL+'/'+ textoimg" viewer="google" style="width:100%;height:100vh;"></ngx-doc-viewer>
+
+    <ngx-extended-pdf-viewer *ngIf="textoimg && textoimg && textoimg.split('.').pop()=='pdf'"
+      [src]="apiURL+'/'+ textoimg" [height]="'800px'" [useBrowserLocale]="false" [textLayer]="true"
+      [showHandToolButton]="false">
+    </ngx-extended-pdf-viewer>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-info" (click)="modal.close('Save click')">Ok</button>
+  </div>
+</ng-template>
+
+
+
+
+
+
+
+
+
+
+<div class="container">
+
+
+
+
+
+
+  <div *ngIf="curse.title" class="h5 text-center bg-light border p-3 rounded">
+    <span class="text-info">{{curse.title}}</span> Ciclo: <span class="text-info">{{curse.ciclo}}</span>
+    Créditos: <span class="text-info">{{curse.credito}}</span> (<span
+      class="text-info">{{curse.especialidad}}--{{curse.mension}}</span>)-{{codigo}}
+    <button *ngIf="datastd.length!=0 && rol==2 && ifexcel=='T'" (click)="generateExcelaverage()"
+      class="btn btn-light btn-outline-primary w-100 my-1">Registro en excel</button>
+  </div>
+  <button *ngIf="Notes.length!==0 && notasum>10" (click)="generateExcel()" class="btn  w-100 btn-info">Excel
+    source</button>
+
+  <div *ngIf="show=='true'" class="text-center">{{teacher.name}}. Rellenar notas entre {{teacher.dateb}} y
+    {{teacher.datee}}</div>
+  <div *ngIf="show=='true'" class="text-center">Promedio (R:Retirado - L:Licencia - y Nota vigesimal)</div>
+
+  <table *ngIf="datastd.length!=0 && (rol==1 || rol==2)" id="season-tble" class="">
+    <tr *ngIf="datastd.length!=0 && (rol==1 || rol==2)">
+      <th></th>
+      <th>N</th>
+      <th>Apellidos y nombres</th>
+      <th>Promedio</th>
+    </tr>
+    <tr *ngFor="let ww_w of datastd index as i">
+      <td>
+        <!--<img [src]="apiURL+'/'+ww_w.foto" class="img-card-top"
+          style='width: 40px; height: 40px; border-radius:20px; position: relative; object-fit: cover;'
+          (error)="onImgError($event)">-->
+      </td>
+      <td>{{ i+1 }}
+      </td>
+      <td class="">{{ ww_w.name }}: <span style="font-size: 8pt" class="text-success">{{ww_w.averagge.length==1?'('+ww_w.averagge[0].teach[0].name+')':""}}
+        {{ww_w.averagge.length==1?'['+ww_w.averagge[0].codigo+']':''}}</span> </td>
+      <td class="w-15" *ngIf="show=='true' || rol=='1'">
+        <input *ngIf="ww_w.averagge.length==0" type="text" class="form-control p-1 input-sm" [disabled]="loading"
+          [value]="" (blur)="onBlurMean($event, ww_w._id, curse.title, curse.ciclo, curse.credito, curse.mension)">
+        <span class="input-group">
+          <input *ngIf="ww_w.averagge.length!=0" [disabled]="loading || ww_w.averagge[0].teacher!=user" type="text"
+            class="form-control"
+            [ngClass]="[ww_w.averagge[0].nota=='0' ? 'form-control bg-light ' : ww_w.averagge[0].nota=='-0' ? 'form-control bg-success ' : 'form-control bg-info text-dark']"
+            [value]="ww_w.averagge[0].nota=='-0'? 'L': ww_w.averagge[0].nota=='0'?'R': ww_w.averagge[0].nota"
+            (blur)="onBlurMeanUpdate($event, ww_w.averagge[0]._id)">
+          <button *ngIf="ww_w.averagge.length!=0 && rol<=2 && ww_w.averagge[0].teacher==user  || rol=='1'"
+            class="btn btn-warning shadow-none" (click)="delete_average(ww_w.averagge[0]._id)">Borrar</button>
+        </span>
+      </td>
+      <td class="w-15" *ngIf="show=='false' && rol!='1'">
+        <input *ngIf="ww_w.averagge.length==0" type="text" class="form-control p-1 input-sm" [disabled]="'false'"
+          [value]="">
+        <span class="input-group">
+          <input *ngIf="ww_w.averagge.length!=0" [disabled]="'false'" type="text" class="form-control"
+            [ngClass]="[ww_w.averagge[0].nota=='0' ? 'form-control bg-light' : ww_w.averagge[0].nota=='-0' ? 'form-control bg-success ' : 'form-control bg-info text-dark']"
+            [value]="ww_w.averagge[0].nota=='-0'? 'L': ww_w.averagge[0].nota=='0'?'R': ww_w.averagge[0].nota">
+        </span>
+      </td>
+
+    </tr>
+  </table>
+
+
+
+
+
+
+
+
+
+
+
+
+  <table *ngIf='Notes.length!=0' id="season-tble">
+    <tr>
+      <th>N</th>
+      <th>NOMBRE</th>
+      <ng-container *ngFor="let www of themes index as i">
+        <th *ngFor="let ww_ of www['themes'] index as i">{{ww_.title.substring(0,3)}}...</th>
+      </ng-container>
+    </tr>
+    <tr *ngFor="let www of Notes index as i">
+      <td>{{ i+1 }}
+        <button class="btn shadow-none p-0 my-1" (click)="open1($any(www).userw[0]._id)">
+          <img [src]="apiURL+'/'+www.userw[0].foto" class="img-card-top imgcurse"
+            style='width: 40px; height: 40px; border-radius:20px; position: relative; object-fit: cover;'
+            (error)="onImgError($event)">
+        </button>
+      </td>
+      <td *ngIf="www.userw">{{ www.userw[0].name }}</td>
+      <ng-container *ngFor="let w of www['cursse'] index as i">
+        <ng-container *ngFor="let ww of w['units'] index as i" class="text-info">
+          <ng-container *ngFor="let wwwww of ww['themes'] index as i" class="text-success">
+            <td *ngIf="wwwww.task.length!=0">{{wwwww.task[0].note?wwwww.task[0].note:""}}</td>
+            <td *ngIf="wwwww.task.length==0"></td>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </tr>
+  </table>
+</div>

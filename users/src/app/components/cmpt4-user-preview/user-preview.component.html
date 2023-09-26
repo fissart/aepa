@@ -1,0 +1,73 @@
+<div Ngxheadroom data-tolerance="5" data-offset="100" data-classes='{"initial":"animated","pinned":"slideDown","unpinned":"slideUp"}' class="fixed-navbar">
+    <app-navigation></app-navigation>
+</div>
+<div class="height"></div>
+
+   <div class="container d-flex justify-content-center align-items-center ">
+
+    <form class="row p-0 w-100" (submit)="updatePhoto(name, correo, password, rol, celular, carrera, mension, ciclo, sexo, dni )">
+
+      <div class="col-md-8 p-0">
+
+        <div class="row p-0 my-0 mx-0 w-100">
+        <div class="col-md-7 form-group mb-2 py-0 px-1">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control shadow-none" [disabled]="userrol == '1'? false: true" placeholder="Photo's Title" [value]="$any(photow).name" #name required>
+        </div>
+
+        <div class="col-md-5 form-group mb-2 py-0 px-1">
+            <label class="form-label">Correo</label>
+            <input type="text" class="form-control shadow-none" [disabled]="userrol == '1'? false: true" placeholder="Photo's Title" [value]="$any(photow).email" #correo required>
+        </div>
+
+        <div class="col-md-3 form-group mb-2 py-0 px-1">
+            <label class="form-label">Password</label>
+            <input type="text" class="form-control shadow-none" placeholder="Photo's Title" [value]="$any(photow).password" #password>
+        </div>
+
+        <div class="col-md-3 form-group mb-2 py-0 px-1">
+            <label class="form-label">Celular</label>
+            <input type="text" class="form-control shadow-none" [disabled]="userrol == '1'? false: true" placeholder="Photo's Title" [value]="$any(photow).celular"  #celular>
+          </div>
+
+        <div class="col-md-6 form-group mb-2 py-0 px-1">
+            <label class="form-label">Carrera</label>
+            <input type="text" class="form-control shadow-none" [disabled]="userrol == '1'? false: true" placeholder="Photo's Title" [value]="$any(photow).carrera"  #carrera>
+        </div>
+        <div class="col-md-3 form-group mb-2 py-0 px-1">
+            <label class="form-label">Mensión (ED, P, G, E)</label>
+            <input type="text" class="form-control shadow-none" [disabled]="userrol == '1'? false: true" placeholder="Photo's Title" [value]="$any(photow).mension"  #mension>
+        </div>
+        <div class="col-md-1 form-group mb-2 py-0 px-1">
+          <label class="form-label">Ciclo</label>
+          <input type="text" class="form-control shadow-none" [disabled]="userrol == '1'? false: true" placeholder="Photo's Title" [value]="$any(photow).ciclo"  #ciclo>
+        </div>
+
+        <div class="col-md-3 form-group mb-2 py-0 px-1">
+            <label class="form-label">Sexo</label>
+            <input type="text" class="form-control shadow-none" [disabled]="userrol == '1'? false: true" placeholder="Photo's Title" [value]="$any(photow).sexo"  #sexo>
+        </div>
+
+        <div class="col-md-3 form-group mb-2 py-0 px-1">
+            <label class="form-label">DNI</label>
+            <input type="text" class="form-control shadow-none" [disabled]="userrol == '1'? false: true" placeholder="Photo's Title" [value]="$any(photow).dni"  #dni>
+        </div>
+        <div class="col-md-2 form-group mb-2 py-0 px-1">
+            <label class="form-label">Rol</label>
+            <input type="text" class="form-control shadow-none"  [disabled]="userrol == '1'? false: true" placeholder="Rol" [value]="$any(photow).rol" #rol>
+         </div>
+       </div>
+       </div>
+
+      <div class="col-md-4 p-0 d-flex justify-content-center align-items-center ">
+        <input type="file" accept="image/*" class="d-none" (change)="capturandoFile($event)" #photoInput>
+        <img *ngIf="userrol == '1'" [src]="photoSelected || apiUrl+'/'+ $any(photow).foto" (error)="onImgError($event)" alt="No image" class="w-100 cursorpoint rounded" (click)="photoInput.click()">
+        <img *ngIf="userrol == '2' || userrol == '2'" [src]="apiUrl+'/'+ $any(photow).foto" (error)="onImgError($event)"  alt="No image" class="w-100 rounded ">
+      </div>
+
+      <button *ngIf="photow.password" class="btn btn-info shadow-none mt-1" [disabled]="loading">{{ loading=='false' ? 'Cargando '+value+'%':
+            'Actualizar'}}
+      </button>
+
+    </form>
+</div>

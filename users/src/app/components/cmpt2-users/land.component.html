@@ -1,0 +1,192 @@
+<div Ngxheadroom [options]="options" class="fixed-navbar">
+  <app-navigation></app-navigation>
+</div>
+<div class="height"></div>
+
+<div class="container">
+
+  <!--modal contenido-->
+  <ng-template #ww let-modal>
+    <div class="modal-body bg-succes">
+      <!-- <markdown [data]="text" katex [katexOptions]="options"></markdown> -->
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-info shadow-none" (click)="modal.close()">Close</button>
+    </div>
+  </ng-template>
+
+  <!--modal item and subitem-->
+  <ng-template #zzz let-modal>
+    <div class="modal-body bg-info">
+      <img [src]="apiUrl+'/'+ text" class="img-fluid w-100" (error)="onImgError($event)">
+    </div>
+    <div class="modal-footer p-1">
+      <button class="btn btn-info shadow-none" (click)="modal.close()">Close</button>
+    </div>
+  </ng-template>
+
+
+
+  <div *ngFor="let w of wwwww index as i">
+    <div *ngIf="$any(w).rol==$any(photos).rol || $any(photos).rol==1" class="justify-content-left align-items-center">
+      <div class="d-flex p-0">
+        <!-- <img [src]="apiUrl+'/'+ $any(w).foto" (error)="onImgError($event)" class="wrapperest10"> -->
+        <div
+          [ngClass]="[$any(w).mension=='G' || $any(w).mension=='P' || $any(w).mension=='E' ||$any(w).mension=='ED' ? 'text-warning p-1':' p-1']">
+          {{i+1}}.
+          <span class="text-info"></span> {{$any(w).name}}
+          <span class="text-primary">{{$any(w).email}}|</span>
+          <span class="text-primary">{{$any(w).password}} </span>
+          <span class="text-info">rol:</span> {{$any(w).rol}}
+          <span class="text-info">carrera:</span> {{$any(w).carrera}}
+          <span class="text-info">mension:</span> {{$any(w).mension}}
+          <span class="text-info">ciclo:</span> {{$any(w).ciclo}}
+          <span [ngClass]="[$any(w).dni && $any(w).dni.length!=8 ? 'bg-danger p-3' : 'text-danger']">dni:</span>
+          {{$any(w).dni}}
+          <div class="">
+            <button class="btn btn-outline-primary card-photo" (click)="open2(zzz, $any(w).foto)">Foto</button>
+            <button *ngIf='$any(photos).rol == 1 || $any(photos)._id == $any(w)._id'
+              class="btn btn-outline-info card-photo" (click)="selectedUser($any(w)._id)">Editar</button>
+            <button *ngIf='$any(photos).rol == 1' class="d-none btn-danger shadow-none"
+              (click)="deleteUser($any(w)._id, $any(w).cursse.length, $any(w).integer.length)">Delete user</button>
+            <!-- <button *ngIf='$any(photos).rol == 1 || $any(photos)._id == $any(w)._id' class="btn btn-info shadow-none"
+              (click)="NewCurse($any(w)._id)">New curse</button> -->
+          </div>
+        </div>
+      </div>
+      <div class="row m-0 d-flex justify-content-center align-items-center p-1">
+        <div class=" col-md-3 m-1 p-1" *ngFor="let item of w['integer']; let i=index">
+          <div *ngFor="let itemwww of item['cursew']; let i=index">
+            <div class="p-0  text-center border">
+              {{itemwww.title}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="$any(w).rol==$any(photos).rol || $any(photos).rol==1"
+      class="row m-0 d-flex justify-content-center align-items-center p-1">
+      <div class=" col-md-3 m-1 p-1" *ngFor="let subItem of w['cursse']; let i=index">
+        <div class="cardnew_ p-0">
+          <div class="rounded p-1" [ngClass]="[subItem.ciclo=='I'||subItem.ciclo=='III'||subItem.ciclo=='V'||subItem.ciclo=='VII'||subItem.ciclo=='IX'?'btn btn-success shadow-none w-100':'btn btn-info shadow-none w-100']">
+            <div class="text-center">
+              {{subItem.title}} {{subItem.mension}}-[{{subItem.ciclo}}]
+            </div>
+            <!--Modal2-->
+            <div class="btn-group d-flex">
+              <button class="btn btn-outline-light"
+                (click)="updatecurseHide( subItem._id)">
+                Archivar
+              </button>
+              <button class="btn btn-light"
+                (click)="goCurse(subItem._id)">Ir al curso</button>
+              <button *ngIf='$any(photos).rol==1||$any(photos)._id == $any(w)._id'
+              class="d-none btn btn-light card-photo shadow-none" (click)="selectedCard(subItem._id)">Editar</button>
+              <button class="d-none btn btn-outline-primary card-photo shadow-none"
+              (click)="open2(zzz, $any(subItem).img)">Portada</button>
+              <button class="d-none btn btn-info card-photo shadow-none"
+              (click)="open1(ww, $any(subItem).description)">Contenido</button>
+              <button *ngIf='$any(photos).rol==1||$any(photos)._id == $any(w)._id'
+                class="btn btn-warning card-photo shadow-none" (click)="deleteCurse(subItem._id)">Borrar</button>
+            </div>
+          </div>
+          <!-- <div *ngIf="subItem.img=='imagen'; else www">
+          <img src="./assets/www_.jpg" class="imgcurse">
+          </div>
+          <ng-template #www>
+          <img *ngIf="subItem.img" [src]="apiUrl+'/'+ subItem.img" class="imgcurse" (error)="onImgError($event)">
+          </ng-template> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <ng-container *ngIf="CurseTeacher && CurseTeacher.length!=0 &&  rol=='2'">
+    <div class="text-uppercase h5  text-center w-100">
+      Tus cursos del semestre
+    </div>
+    <div class="row d-flex justify-content-center border rounded my-3">
+      <div class="col-md-4 p-2" *ngFor="let photo of CurseTeacher index as i">
+        <div class='card bg-light text-align-right border border-info p-1'>
+          <div class="text-center">
+            {{photo.title}} [{{photo.mension=='P'?'AP Pintura':photo.mension=='E'?'AP
+            Escultura':photo.mension=='ED'?'EDUCACIÓN Artística':'AP Grabado'}} {{photo.ciclo}}]
+          </div>
+          <!-- <img [src]="apiUrl+'/'+photo.img" class="img-card-top imgcurse" (error)="onImgError2($event)"> -->
+          <div class="w-100 text-center ">
+            <div class="w-100 btn-group">
+              <!--<button class="btn btn-success shadow-none" (click)="goCurse( $any(photo)._id)">Ir al curso</button>-->
+              <button class="btn btn-danger  shadow-none" (click)="deleteCurse(photo._id)">Borrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <div *ngIf="cursessource.length!=0 &&  rol=='2'" class="container text-center h5 mt-3 ">
+    CURSOS EDUCACIÓN ARTÍSTICA - SEMESTRE {{cursessource[0].ciclo=="I" || cursessource[0].ciclo=="III" ||
+    cursessource[0].ciclo=="V" || cursessource[0].ciclo=="VII" || cursessource[0].ciclo=="IX"?"IMPAR":"PAR"}} {{year}}
+  </div>
+  <div *ngIf="cursessource.length!=0 &&  rol=='2'" class="row d-flex justify-content-center align-items-center my-3">
+    <ng-container *ngFor="let photo of cursessource index as i">
+      <div *ngIf="photo.mension=='EA'" class="rounded p-1 col-md-4 p-1 text-center"
+        [ngClass]="[photo.mension=='EA'?'border-success':'border-warning']">
+        <div class="">
+          <button type="button" *ngIf="photo.mension=='EA'"
+            (click)="NewCurseTeacher(photos._id, photo.title, photo.mension, 'ED', photo.credito, photo.ciclo, photo.codigo, photo.requisito)"
+            [ngClass]="[photo.ciclo=='I' || photo.ciclo=='III' || photo.ciclo=='V' || photo.ciclo=='VII' || photo.ciclo=='IX' ? 'btn btn-info':'btn btn-warning']"
+            (click)="Getcursesources()">
+            {{photo.title}} [{{photo.mension}}-{{photo.ciclo}}]
+          </button>
+          <span *ngIf="photo.mension=='AP'"
+            [ngClass]="[photo.ciclo=='I' || photo.ciclo=='III' || photo.ciclo=='V' || photo.ciclo=='VII' || photo.ciclo=='IX' ? 'text-dark':'']"
+            (click)="Getcursesources()">
+            {{photo.title}} [{{photo.mension}}-{{photo.ciclo}}]
+          </span>
+        </div>
+
+      </div>
+    </ng-container>
+  </div>
+
+  <div *ngIf="cursessource.length!=0 && rol=='2'" class="container text-center h5 mt-3 ">
+    CURSOS ARTISTA PROFESIONAL - SEMESTRE {{cursessource[0].ciclo=="I" || cursessource[0].ciclo=="III" ||
+    cursessource[0].ciclo=="V" || cursessource[0].ciclo=="VII" || cursessource[0].ciclo=="IX"?"IMPAR":"PAR"}} {{year}}
+  </div>
+  <div *ngIf="cursessource.length!=0 &&  rol=='2'"
+    class="row d-flex border justify-content-center align-items-center my-3">
+    <ng-container *ngFor="let photo of cursessource index as i">
+      <div class="col-md-4 col-sm-6 p-1 text-center" *ngIf="photo.mension=='AP'">
+        <div *ngIf="photo.mension=='AP'"
+          [ngClass]="[photo.ciclo=='I' || photo.ciclo=='III' || photo.ciclo=='V' || photo.ciclo=='VII' || photo.ciclo=='IX' ? 'text-dark':'']"
+          (click)="Getcursesources()">
+          {{photo.title}} [{{photo.mension}}-{{photo.ciclo}}]
+          <div class="" *ngIf="photo.mension=='AP' && photo.codigo.substring(0,4)=='ESFA'">
+            <button type="button"
+              (click)="NewCurseTeacher(photos._id, photo.title, photo.mension, 'G', photo.credito, photo.ciclo, photo.codigo, photo.requisito)"
+              [ngClass]="[photo.mension=='AP'?'btn btn-primary ':'btn btn-light']">{{photo.title}}</button>
+          </div>
+        </div>
+
+        <div class="btn-group" *ngIf="photo.mension=='AP' && photo.codigo.substring(0,4)!='ESFA'">
+          <button type="button"
+            (click)="NewCurseTeacher(photos._id, photo.title, photo.mension, 'G', photo.credito, photo.ciclo, photo.codigo, photo.requisito)"
+            [ngClass]="[photo.mension=='AP'?'btn btn-primary  ':'btn btn-light']">Grabado</button>
+          <button type="button"
+            (click)="NewCurseTeacher(photos._id, photo.title, photo.mension, 'E', photo.credito, photo.ciclo, photo.codigo, photo.requisito)"
+            [ngClass]="[photo.mension=='AP'?'btn btn-info':'btn btn-light']">Escultura</button>
+          <button type="button"
+            (click)="NewCurseTeacher(photos._id, photo.title, photo.mension, 'P', photo.credito, photo.ciclo, photo.codigo, photo.requisito)"
+            [ngClass]="[photo.mension=='AP'?'btn btn-success':'btn btn-light']">Pintura</button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+
+
+</div>
